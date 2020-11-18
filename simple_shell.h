@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <fcntl.h>
 
 /**
  * struct clean_command - holds a command elements
@@ -18,9 +19,12 @@
  */
 typedef struct clean_command
 {
-	char *command;
-	char *args[];
+	char *command; 
 	char *next_oper;
+	char *args[];
 } cmd_t;
+
+void *_realloc(void *ptr, unsigned int, unsigned int);
+ssize_t _getline(char **, size_t *, int);
 
 #endif /* SIMPLE_SHELL_H */
