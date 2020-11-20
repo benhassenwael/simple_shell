@@ -1,4 +1,4 @@
-#include "header.h"
+#include "simple_shell.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -56,12 +56,22 @@ int _strlen(char *str)
 * Return: length
 */
 
-int _printArrayOfStrings(char **ptr)
+int _printArrayOfStrings(char **ptr, int length)
 {
 	int i = 0;
 
-	for (i = 0; ptr[i]; i++)
+
+	for (i = 0; i < length; i++)
+	{
+		_putchar(i + '0');
+		_putchar('/');
+		_putchar(' ');
 		_puts(ptr[i]);
+		_putchar('\n');
+	}
+	_puts("length = ");
+	_putchar(i + '0');
+	_putchar('\n');
 	return (i);
 }
 
@@ -86,7 +96,9 @@ char *_copAlloc(char *str, gc *GC)
 	if (!ptr)
 		return (NULL);;
 	for (i = 0; str[i]; i++)
+	{
 		ptr[i] = str[i];
+	}
 	ptr[i] = '\0';
 	/* ptr is initialized we can add it to GC */
 	if (GC)

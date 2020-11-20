@@ -10,6 +10,7 @@
 #include<readline/readline.h> 
 #include<readline/history.h> 
 #include <fcntl.h>
+/*
 typedef struct buf {
 	char ch;
 	struct buf *next;
@@ -19,11 +20,30 @@ typedef struct List_path {
 	char *path;
 	struct List_path *next;
 } List_path;
-
 typedef struct G_collecttor {
 	char **str_coll;
 	int length;
 } gc;
+
+
+typedef struct NewCmd_t
+{
+	char next_oper;
+	char **args;
+	char length;
+	int err;
+} NewCmd_t;
+
+
+typedef struct clean_command
+{
+	char *command; 
+	char *args;
+	char next_oper;
+} cmd_t;
+
+
+
 
 char *_strparse(char **buffer, char *deli);
 int parsedPipe(char *str, char **strpiped);
@@ -47,13 +67,12 @@ char *delete_comment(char **str);
 char *_strparse(char **buf, char *sep);
 int _cd(char **args, char **env);
 char *extractValue(char *Name, char *STR);
-
-typedef struct cln_cmd
-{
-	char *command;
-	char *args;
-	char next_oper;
-} cmd_t;
+int _printArrayOfStrings(char **ptr, int length);
+int _insertTo_GC(gc *GC, char *str);
+void *_realloc(void *ptr, unsigned int, unsigned int);
+ssize_t _getline(char **, size_t *, int);
+NewCmd_t *parseLine(char *line);
+//char **appand_To_NewCmd_t(NewCmd_t *cmd, char **arg, char *command, gc *GC);
 
 typedef struct exc_built
 {
@@ -61,6 +80,8 @@ typedef struct exc_built
 	int (*handleName)(char **args, char *env[]);
 
 } exc_built;
+
+*/
 
 
 #endif

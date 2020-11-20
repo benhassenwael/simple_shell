@@ -1,6 +1,4 @@
-#include <stdlib.h>
 #include "simple_shell.h"
-
 /**
  * _realloc - reallocates a memory block
  * @ptr: pointer to memory to reallocate
@@ -20,36 +18,20 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 
 	if (new_size == old_size)
 		return (ptr);
-	if (ptr == NULL)
-		return (malloc(new_size));
 	else if (new_size == 0)
 	{
-		free(ptr);
+	//	free(ptr);
 		return (NULL);
 	}
-	if (sizeof(*ptr) > 1)
+	old_char_ptr = ptr;
+	new_char_ptr = malloc(new_size);
+	if (new_char_ptr == NULL)
+		return (NULL);
+	for (i = 0; i < new_size && i < old_size; i++)
 	{
-		old_cmd_ptr = ptr;
-		new_cmd_ptr = malloc(new_size);
-		if (new_cmd_ptr == NULL)
-			return (NULL);
-		for (i = 0; i < new_size && i < old_size; i++)
-		{
-			new_cmd_ptr[i] = old_cmd_ptr[i];
-		}
-		free(old_cmd_ptr);
-		return (new_cmd_ptr);
-	} else
-	{
-		old_char_ptr = ptr;
-		new_char_ptr = malloc(new_size);
-		if (new_char_ptr == NULL)
-			return (NULL);
-		for (i = 0; i < new_size && i < old_size; i++)
-		{
-			new_char_ptr[i] = old_char_ptr[i];
-		}
-		free(old_char_ptr);
-		return (new_char_ptr);
+		new_char_ptr[i] = old_char_ptr[i];
 	}
+	//free(old_char_ptr);
+	return (new_char_ptr);
+
 }

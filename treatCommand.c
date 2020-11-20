@@ -1,4 +1,4 @@
-#include "header.h"
+#include "simple_shell.h"
 #include <stdio.h>
 #include <string.h>
 
