@@ -1,6 +1,22 @@
 #include "simple_shell.h"
 #include <stdlib.h>
+int _insertTo_GC(gc *GC, void *vod)
+{
 
+	void **p;
+	int *len = &(GC->length), i = 0;
+
+	if (!GC || !vod)
+		return (-1);
+	p = GC->str_coll;
+	/* insert new string in last position*/
+	p[*len] = vod;
+	/* increment the length*/
+	*len = *len + 1;
+	/* NULL terminated array*/
+	p[*len] = NULL;
+	return (0);
+}
 
 /**
 * _insertTo_GC - when declaring a string in the heap this function take a
@@ -12,7 +28,6 @@
 * @str: string to be added
 *
 * Return: 0
-*/
 
 int _insertTo_GC(gc *GC, char *str)
 {
@@ -24,14 +39,15 @@ int _insertTo_GC(gc *GC, char *str)
 	if (!GC || !str || *str == '\0')
 		return (-1);
 	p = GC->str_coll;
-	/* insert new string in last position*/
 	p[*len] = str;
-	/* increment the length*/
 	*len = *len + 1;
-	/* NULL terminated array*/
 	p[*len] = NULL;
 	return (0);
 }
+*/
+/* insert new string in last position*/
+/* increment the length*/
+/* NULL terminated array*/
 
 /**
 * free_Garbage_coll - free each element in the array of string in the struct gc
