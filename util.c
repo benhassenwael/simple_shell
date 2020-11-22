@@ -2,83 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-/**
-* _putchar - print a single char
-* @c: char
-*
-* Return: int
-*/
 
-int _putchar(char c)
-{
-	return (write(1, &c, 1));
-}
-
-
-/**
-* _puts - print a string
-* @str: string
-*
-* Return: length of the string
-*/
-
-int _puts(char *str)
-{
-	int i = 0;
-
-	for (i = 0; str[i]; i++)
-		_putchar(str[i]);
-
-	return (i);
-}
-
-/**
-* _strlen - return the length of the string
-* @str: string
-*
-* Return: length
-*/
-
-int _strlen(char *str)
-{
-	int i = 0;
-
-	for (i = 0; str[i]; i++)
-	;
-	return (i);
-}
-
-/**
-* _printArrayOfStrings - print all string in an 2D array and return the nb of
-* words
-* @ptr: pointer to an array of strings
-*
-* Return: length
-*/
-
-int _printArrayOfStrings(char **ptr, int length)
-{
-	int i = 0;
-
-
-	for (i = 0; i < length; i++)
-	{
-		_putchar(i + '0');
-		_putchar('/');
-		_putchar(' ');
-		_puts(ptr[i]);
-		_putchar('\n');
-	}
-	_puts("length = ");
-	_putchar(i + '0');
-	_putchar('\n');
-	return (i);
-}
 
 /**
 * _copAlloc - allocate and copy string
 * @str: string
-*
+* @GC: gc
 * Return: new pointer to allocated string
 */
 
@@ -94,7 +23,7 @@ char *_copAlloc(char *str, gc *GC)
 	;
 	ptr = malloc(sizeof(char) * (i + 1));
 	if (!ptr)
-		return (NULL);;
+		return (NULL);
 	for (i = 0; str[i]; i++)
 	{
 		ptr[i] = str[i];
@@ -106,6 +35,7 @@ char *_copAlloc(char *str, gc *GC)
 
 	return (ptr);
 }
+
 /**
 * _strConcatEnv - concatinate 2 string send with char in between
 * if 0 is passed concat only 2 strings
@@ -124,13 +54,10 @@ char *_strConcatEnv(char *str1, char *cop, int ch, gc *newGC)
 	if (!cop)
 		cop = "";
 	if (!str1)
-		return (NULL);;
+		return (NULL);
 	len1 = _strlen(str1);
 	len2 = _strlen(cop);
-
-
 	length = len1 + len2 + 2;
-
 	/* allocate */
 	path = malloc(sizeof(char) * length);
 	if (!path)
@@ -158,7 +85,7 @@ char *_strConcatEnv(char *str1, char *cop, int ch, gc *newGC)
 	path[i] = '\0';
 	if (newGC)
 		_insertTo_GC(newGC, path);
-	else 
+	else
 		printf("u are not allocating pls give none null pointer\n");
 	return (path);
 }
@@ -227,14 +154,12 @@ char *extractValue(char *Name, char *STR)
 	char *ptr = NULL;
 	int i = 0;
 
-	/*
 	if (!Name)
 		return (NULL);
 	if (!STR)
 		return ("nill");
 	if (*STR == '\0')
 		return ("");
-	*/
 
 	ptr = STR;
 	for (i = 0; STR[i]; i++)
