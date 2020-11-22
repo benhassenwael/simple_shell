@@ -17,7 +17,7 @@
 int change_directory(char *str, char **env, gc *GC)
 {
 
-	char newPWD[M];
+	char newPWD[1000];
 	char oldPWD[1000];
 	int i = 0, err;
 
@@ -46,42 +46,55 @@ int change_directory(char *str, char **env, gc *GC)
 
 
 /**
-* main - treat cd
-* @argc: nb of arguments
-* @argv: arguments
-* @env: environment vars
+* _cd - cd builting treat changes of directories handle "~" "-"
+* @cmd: pointer to struct
+* @env: env var
 *
 * Return: 0
-* Error: 1
+* Error: -1
 */
-int _cd(char **args, char **env)
+int _cd(NewCmd_t *cmd, char **env)
 {
-
+	char *home = NULL, *oldPath = NULL, *fstArg = NULL, found = 0, st = 0;
 	gc GC;
-	char *ptr = NULL;
-	char *home = NULL, *homeVal = NULL;
-	int found = 0, nbArgs = 0;
 
-	GC.str_coll = malloc(sizeof(char *) * 500);
-	GC.str_coll[0] = NULL;
+	GC.str_coll = malloc(sizeof(gc) * 1024);
 	GC.length = 0;
+	home = _getenv("HOME", env);
+	home = _strConcatEnv("/", home, 0, &GC);
+	oldPath = _getenv("OLDPWD", env);
 
-
-	homeVal = _getenv("HOME", env);
-	/* dont want any char in between and dont want allocation */
-	home = _strConcatEnv("/", homeVal, 0, &GC);
-	ptr = _trim(args, &GC);
-	ptr = _strparse(&ptr, " ");
-	nbArgs = ptr ? 1 : 0;
-	ptr =  nbArgs == 0 ? _getenv("HOME", env) : ptr;
-
-
-	found = checkName("-", ptr, 0);
-	if (found == 1)
-		ptr = _getenv("OLDPWD", env);
-	printf("ptr send  = %s\n", ptr);
-	change_directory(ptr, env, &GC);
-
-	free_Garbage_coll(&GC);
-	return (0);
+	if (!cmd || !cmd->args || !env)
+		return (-1);
+	fstArg = cmd->args[1];
+	if (fstArg)
+	{
+		found = checkName("-", fstArg, 0);
+		if (found)
+		{
+			st = change_directory(oldPath, env, &GC);
+			free_Garbage_coll(&GC);
+			return (st < 0 ? (-1) : (0));
+		}
+		else if (checkName("~", fstArg, 0))
+		{
+			change_directory(home, env, &GC);
+			free_Garbage_coll(&GC);
+			return (st < 0 ? (-1) : (0));
+		}
+		else
+		{
+			change_directory(fstArg, env, &GC);
+			free_Garbage_coll(&GC);
+			return (st < 0 ? (-1) : (0));
+		}
+	}
+	else
+	{
+		change_directory(home, env, &GC);
+		free_Garbage_coll(&GC);
+		return (st < 0 ? (-1) : (0));
+	}
 }
+
+
