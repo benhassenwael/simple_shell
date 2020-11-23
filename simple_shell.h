@@ -47,15 +47,13 @@ typedef struct G_collecttor
  * struct exc_built - holds a func to execute
  * @name: name of a func to execute
  * @handleName: func to execute
+ * this a typedef named built_func_t: for pointer to the built-in function
  */
-
-typedef struct exc_built
-{
+typedef int (*builtin_func_t) (char **args, char *env[]);
+typedef struct exec_buit {
 	char *name;
-	int (*handleName)(NewCmd_t *cmd, char **env, gc *GC);
-
-} exc_built;
-
+	int (*handleName)(char **args, char **env);
+} exec_buit;
 
 /**
  * struct clean_command - holds a command elements
@@ -72,6 +70,11 @@ typedef struct clean_command
 
 void *_realloc(void *ptr, unsigned int, unsigned int);
 ssize_t _getline(char **, size_t *, int);
+int str_is_eq(char *, char *);
+int exec_prog(char *,char **, char **);
+int _help(char **, char **);
+builtin_func_t get_builtin_func(NewCmd_t *);
+char *find_prog_path(char *, char **);
 
 int _strlen(char *str);
 char *_strparse(char **buffer, char *deli);
@@ -96,6 +99,8 @@ int _insertTo_GC(gc *GC, void *str);
 void *_realloc(void *ptr, unsigned int, unsigned int);
 ssize_t _getline(char **, size_t *, int);
 NewCmd_t *parseLine(char *line);
+/*
+*/
 int free_array_of_struct(NewCmd_t **arr);
 int str_is_eq(char *str1, char *str2);
 int exec_buit_ins(NewCmd_t *cmd, char **env, gc *GC);
@@ -104,8 +109,6 @@ int _cd(NewCmd_t *cmd, char **env, gc *newGC);
 int _insertTo_Env_GC(gc *GC, void *vod);
 
 NewCmd_t **search_for_command(char *str);
-
-
 
 
 
