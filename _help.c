@@ -106,19 +106,20 @@ int print_str(char *str)
  * _help - a buit-in function that displays information about
  * built-in commands
  * @args: a null terminated array of arguments
+ * @env: environment variables
  *
  * Return: 0 on success and -1 on failure
  */
-int _help(char **args)
+int _help(char **args, char **env)
 {
 	char *builtin[] = {"cd", "help", "history", "alias",
 				"setenv", "unsetenv", "exit"};
 	char *txt_arr[] = {CD_TXT, HELP_TXT, HISTORY_TXT, ALIAS_TXT,
 				SETENV_TXT, UNSETENV_TXT, EXIT_TXT};
 	char *txt, *arg;
-	int exist = 0, builtin_i, args_i = 0;
+	int exist = 0, builtin_i, args_i = 1;
 
-	if (args[0] == NULL)
+	if (args[1] == NULL)
 	{
 		print_str(ALL_TXT);
 		return (0);

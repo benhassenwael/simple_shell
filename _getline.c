@@ -1,13 +1,4 @@
 #include "simple_shell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
-#include <limits.h>
-#include <signal.h>
 
 /**
  * copy_buffer - allocate new size and concatenates given buffer to lineptr

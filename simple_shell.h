@@ -24,10 +24,15 @@ typedef struct G_collecttor
 	int length;
 } gc;
 
+/**
+ * this a typedef named built_func_t: for pointer to the built-in function
+ */
+typedef int (*builtin_func_t) (char **args, char *env[]);
+
 typedef struct exc_built
 {
 	char *name;
-	int (*handleName)(char **args, char *env[]);
+	builtin_func_t handleName;
 
 } exc_built;
 
@@ -47,6 +52,11 @@ typedef struct clean_command
 
 void *_realloc(void *ptr, unsigned int, unsigned int);
 ssize_t _getline(char **, size_t *, int);
+int str_is_eq(char *, char *);
+int exec_prog(char *,char **, char **);
+int _help(char **, char **);
+builtin_func_t get_builtin_func(NewCmd_t *);
+char *find_prog_path(char *, char **);
 
 char *_strparse(char **buffer, char *deli);
 int parsedPipe(char *str, char **strpiped);
@@ -70,19 +80,5 @@ int _insertTo_GC(gc *GC, char *str);
 void *_realloc(void *ptr, unsigned int, unsigned int);
 ssize_t _getline(char **, size_t *, int);
 NewCmd_t *parseLine(char *line);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #endif /* SIMPLE_SHELL_H */
