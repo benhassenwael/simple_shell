@@ -12,7 +12,7 @@ int main(int argc, char *argv[], char **env)
 	ssize_t err;
 	int fd, i = 0;
 	char *str = NULL;
-	NewCmd_t *result = NULL;
+	NewCmd_t **result = NULL;
 
 	signal(SIGINT, SIG_IGN);
 
@@ -27,7 +27,7 @@ int main(int argc, char *argv[], char **env)
 		} else
 			printf("your command was: %s", buffer);
 		
-		result = parseLine(buffer);
+	//	result = search_for_command(buffer);
 		if (result == NULL)
 			perror("failed to parseLine");
 		else 
