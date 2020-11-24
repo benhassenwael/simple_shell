@@ -49,10 +49,11 @@ typedef struct G_collecttor
  * @handleName: func to execute
  * this a typedef named built_func_t: for pointer to the built-in function
  */
-typedef int (*builtin_func_t) (char **args, char *env[]);
-typedef struct exec_buit {
+typedef int (*builtin_func_t) (char **args, char *env[], gc *GC);
+typedef struct exec_buit
+{
 	char *name;
-	int (*handleName)(char **args, char **env);
+	int (*handleName)(char **args, char **env, gc *GC);
 } exec_buit;
 
 /**
@@ -72,7 +73,7 @@ void *_realloc(void *ptr, unsigned int, unsigned int);
 ssize_t _getline(char **, size_t *, int);
 int str_is_eq(char *, char *);
 int exec_prog(char *,char **, char **);
-int _help(char **, char **);
+int _help(char **, char **, gc *GC);
 builtin_func_t get_builtin_func(NewCmd_t *);
 char *find_prog_path(char *, char **);
 
@@ -85,8 +86,6 @@ char *GetAllDir(char **str);
 int checkName(char *Name, char *ARG, char ch);
 char *_strConcatEnv(char *str1, char *cop, int ch, gc *GC);
 void parseSpecialChar(char *str, char **parsed, char *sep, char *sep2);
-int _setenv(char **env, char *Name, char *value, int overwrite, gc *GC);
-int _delete_env(char **env, char *Name, gc *GC);
 void free_noInUse_GC(gc *GC);
 int free_Name_from_GC(gc *GC, char *Name);
 void free_GC_env(gc *GC);
@@ -103,10 +102,18 @@ NewCmd_t *parseLine(char *line);
 */
 int free_array_of_struct(NewCmd_t **arr);
 int str_is_eq(char *str1, char *str2);
-int exec_buit_ins(NewCmd_t *cmd, char **env, gc *GC);
-int setttenv(NewCmd_t *cmd, char **env, gc *newGC);
-int _cd(NewCmd_t *cmd, char **env, gc *newGC);
+int setttenv(char **args, char **env, gc *newGC);
+int _cd(char **args, char **env, gc *newGC);
 int _insertTo_Env_GC(gc *GC, void *vod);
+int exec_buit_ins(NewCmd_t *cmd, char **env, gc *GC);
+int _printEnv(char **args, char **env, gc *GC);
+int _unset_env(char **args, char **env, gc *GC);
+int _setenv(char **args, char **env, gc *GC);
+int checkAndSet(char **env, char *Name, char *value, int overwrite, gc *GC);
+
+int _Appand_command(char *str, char *fileName, gc *GC);
+
+int _history(char **args, char **env, gc *GC);
 
 NewCmd_t **search_for_command(char *str);
 
