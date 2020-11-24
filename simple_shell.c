@@ -36,7 +36,6 @@ int main(int argc, char *argv[], char **env)
 				exec_cmd(result, env, &GC, buffer);
 			}
 			free_array_of_struct(result);
-			
 		}
 	} while (notatty);
 	return (0);
