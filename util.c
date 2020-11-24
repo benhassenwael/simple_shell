@@ -108,7 +108,6 @@ int checkName(char *Name, char *ARG, char ch)
 	int i, j, found = 0;
 
 
-			printf("found %s\n", exec[i].name);
 	if (!Name || !ARG || *ARG == '\0')
 		return (0);
 	if (*Name == '\0')

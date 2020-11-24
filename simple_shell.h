@@ -61,6 +61,7 @@ ssize_t _getline(char **, size_t *, int);
 int str_is_eq(char *, char *);
 int exec_prog(char *,char **, char **);
 int _help(char **, char **, gc *GC);
+int __exit(char **, char **, gc *);
 builtin_func_t get_builtin_func(NewCmd_t *);
 char *find_prog_path(char *, char **);
 NewCmd_t **search_for_command(char *);
