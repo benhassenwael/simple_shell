@@ -29,7 +29,7 @@ int should_execute(int did_succ, char prev_op)
  *
  * Return: always 0
  */
-int exec_cmd(NewCmd_t **cmd_list, char **env, gc *GC)
+int exec_cmd(NewCmd_t **cmd_list, char **env, gc *GC, char *buff)
 {
 	int err;
 	builtin_func_t builtin_func = NULL;
@@ -42,6 +42,10 @@ while (*cmd_list)
 	cmd_arr = *cmd_list;
 	if (should_execute(did_succ, prev_op))
 	{
+		if (str_is_eq(cmd_arr->args[0], "exit"))
+		{
+			__exit(cmd_arr->args, GC, cmd_list, buff);
+		}
 		builtin_func = get_builtin_func(cmd_arr);
 		if (builtin_func != NULL)
 		{
