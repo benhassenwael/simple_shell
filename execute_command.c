@@ -29,15 +29,17 @@ int should_execute(int did_succ, char prev_op)
  *
  * Return: always 0
  */
-int exec_cmd(NewCmd_t *cmd_arr, char **env)
+int exec_cmd(NewCmd_t **cmd_list, char **env)
 {
 	int err;
 	builtin_func_t builtin_func = NULL;
 	char *prog_path = NULL, prev_op = '&';
 	int did_succ = 1;
+	NewCmd_t *cmd_arr;
 
-while (cmd_arr->args)
+while (*cmd_list)
 {
+	cmd_arr = *cmd_list;
 	if (should_execute(did_succ, prev_op))
 	{
 		builtin_func = get_builtin_func(cmd_arr);
@@ -60,11 +62,11 @@ while (cmd_arr->args)
 		}
 	}
 	prev_op = cmd_arr->next_oper;
-	cmd_arr++;
+	cmd_list++;
 }
 return (0);
 }
-
+/**
 void main(int c, char **v, char **env)
 {
 	NewCmd_t cmd, cmd1;
@@ -82,4 +84,4 @@ void main(int c, char **v, char **env)
 	NewCmd_t cmd_list[] = {cmd, cmd1, NULL};
 
 	exec_cmd(cmd_list, env);
-}
+}*/

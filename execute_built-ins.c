@@ -1,5 +1,5 @@
 #include "simple_shell.h"
-
+#include <stdio.h>
 
 /**
 * get_builtin_func - check for the right function by checking the given and
@@ -14,11 +14,10 @@ builtin_func_t get_builtin_func(NewCmd_t *cmd)
 {
 	int i = 0, found = 0;
 
-	exc_built exec[] = {
+	exec_buit exec[] = {
 		{"help", _help},
 		{NULL, NULL}
 	};
-
 
 	/* only enter when cmd->command is not null */
 	for (i = 0; exec[i].name && cmd; i++)
@@ -33,3 +32,4 @@ builtin_func_t get_builtin_func(NewCmd_t *cmd)
 
 	return (NULL);
 }
+

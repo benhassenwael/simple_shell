@@ -8,35 +8,30 @@
 int main(int argc, char *argv[], char **env)
 {
 	char *buffer = NULL;
-	size_t n; 
+	size_t n;
 	ssize_t err;
 	int fd, i = 0;
-	char *str = NULL;
+	char *str = "&& help cd";
+
+	gc GC;
+	GC.str_coll = malloc(sizeof(gc) * 1024);
+	GC.length = 0;
 	NewCmd_t **result = NULL;
+	int notatty;
 
 	signal(SIGINT, SIG_IGN);
-
-	while (1)
-	{
-		//printf("%s$ ", "THE CURRENT DIR");
+	notatty = isatty(STDIN_FILENO);
+	do {
 		err = _getline(&buffer, &n, STDIN_FILENO);
-		if (err == -1)
+		if (err != -1)
 		{
-			perror("failed to read command");
-			return (-1);
-		} else
-			printf("your command was: %s", buffer);
-		
-	//	result = search_for_command(buffer);
-		if (result == NULL)
-			perror("failed to parseLine");
-		else 
-		{
-			printf(" ------ of ---------- \n");
+			buffer = _trim(&buffer, 0);
+			printf(" --->%s<----\n",buffer);
+			result = search_for_command(buffer);
+			_printArrayOfStrings(result[i]->args, 0);
+			exec_cmd(result, env);
 		}
-
-	}
-	/*
-	*/
+		free(buffer);
+	} while (notatty);
 	return (0);
 }
