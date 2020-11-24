@@ -76,6 +76,8 @@ int exec_prog(char *,char **, char **);
 int _help(char **, char **, gc *GC);
 builtin_func_t get_builtin_func(NewCmd_t *);
 char *find_prog_path(char *, char **);
+NewCmd_t **search_for_command(char *);
+int exec_cmd(NewCmd_t **, char **);
 
 int _strlen(char *str);
 char *_strparse(char **buffer, char *deli);

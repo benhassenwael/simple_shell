@@ -10,8 +10,8 @@ int main(int argc, char *argv[], char **env)
 	char *buffer = NULL;
 	size_t n;
 	ssize_t err;
-	int fd, i = 0, ref = 0;
-	char *str = NULL;
+	int fd, i = 0;
+	char *str = "&& help cd";
 
 	gc GC;
 	GC.str_coll = malloc(sizeof(gc) * 1024);
@@ -19,45 +19,21 @@ int main(int argc, char *argv[], char **env)
 	GC.env_legth = 0;
 	GC.length = 0;
 	NewCmd_t **result = NULL;
+	int notatty;
 
 	signal(SIGINT, SIG_IGN);
-
-	while (1)
-	{
-		printf("%s$ ", _getenv("PWD", env));
+	notatty = isatty(STDIN_FILENO);
+	do {
 		err = _getline(&buffer, &n, STDIN_FILENO);
-		create_Ref_to_Command(buffer, ref, "./his", &GC);
-		ref ++;
-		buffer = _trim(&buffer, 0);
-		if (!buffer)
-			continue;
-		if (err == -1)
+		if (err != -1)
 		{
-			free(buffer);
-			free_GC_env(&GC);
-			free(GC.str_coll);
-			perror("some thing wrong with getline ");
-			return (-1);
+			buffer = _trim(&buffer, 0);
+			printf(" --->%s<----\n",buffer);
+			result = search_for_command(buffer);
+			_printArrayOfStrings(result[i]->args, 0);
+			exec_cmd(result, env);
 		}
-		printf(" --->%s<----\n",buffer);
-		result = search_for_command(buffer);
-		if (!result)
-		{
-			perror("pleas check spelling in ur command");
-		}
-		else
-		{
-			i = 0;
-			while (result[i])
-			{
-				_printArrayOfStrings(result[i]->args, 0);
-				exec_buit_ins(result[i], env, &GC);
-				i++;
-			}
-		}
-		free_array_of_struct(result);
-	}
-	free_GC_env(&GC);
-	free(GC.str_coll);
+		free(buffer);
+	} while (notatty);
 	return (0);
 }
