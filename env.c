@@ -13,7 +13,8 @@
 * Error: -1
 */
 
-int _delete_env(char **env, char *Name)
+
+int delete_env(char **env, char *Name, gc *GC)
 {
 	int i, found = 0, j = 0, k = 0;
 	char *str;
@@ -24,6 +25,7 @@ int _delete_env(char **env, char *Name)
 		found = checkName(Name, env[i], 0);
 		if (found)
 		{
+			free_Name_from_GC(GC, Name);
 			for (j = i + 1; env[i]; j++, i++)
 				env[i] = env[j];
 			break;
@@ -33,6 +35,26 @@ int _delete_env(char **env, char *Name)
 	return (0);
 }
 
+/**
+ * _unset_env - search for Name of the var env and delete it
+ * @args: array of strings
+ * @env: var environment
+ * @GC: gc
+ *
+ * Return: 0
+ * Error: -1
+ */
+
+int _unset_env(char **args, char **env, gc *GC)
+{
+	char *Name = args[1];
+
+	if (!args || !env || args[2])
+		return (-1);
+	
+	delete_env(env, Name, GC);
+
+}
 /**
 * _setenv - take the name and the value of the Variable u want to add to the
 * environment variables, check if u want to overwrite it if it exist.
@@ -45,9 +67,10 @@ int _delete_env(char **env, char *Name)
 * Error: -1
 */
 
-int _setenv(char **env, char *Name, char *value, int overwrite, gc *GC)
+int checkAndSet(char **env, char *Name, char *value, int overwrite, gc *GC)
 {
 	int i = 0, found = 0;
+	char *oldEnv = NULL;
 
 	while (env[i])
 	{
@@ -59,14 +82,17 @@ int _setenv(char **env, char *Name, char *value, int overwrite, gc *GC)
 		{
 			if (overwrite)
 			{
-				env[i] = _strConcatEnv(Name, value, '=', GC);
+				oldEnv = env[i];
+				env[i] = _strConcatEnv(Name, value, '=', 0);
+				_insertTo_Env_GC(GC, env[i]);
 				return (0);
 			}
 		}
 		i++;
 	}
 
-	env[i] = _strConcatEnv(Name, value, '=', GC);
+	env[i] = _strConcatEnv(Name, value, '=', 0);
+	_insertTo_Env_GC(GC, env[i]);
 	env[i + 1] = NULL;
 	return (0);
 }
@@ -95,4 +121,47 @@ char *_getenv(char *name, char **env)
 		i++;
 	}
 	return (NULL);
+}
+
+
+
+
+int _setenv(char **args, char **env, gc *newGC)
+{
+	char *Name = args[1];
+	char *Value = args[2];
+	char *str;
+
+	if (Name && Value)
+	{
+		checkAndSet(env, Name, Value, 1, newGC);
+		str = _getenv(Name, env);
+		printf(" created = %s\n", str);
+	}
+	free_noInUse_GC(newGC);
+	return (0);
+}
+
+
+/*_printEnv - print all environment variables
+* args - array of strings
+* @env: environment variables
+* @GC: gc
+*
+* Return: 0
+* Error: -1
+*/
+
+int _printEnv(char **args, char **env, gc *GC)
+{
+	int i = 0;
+
+	if (!args || !env)
+		return (-1);
+	while (env[i])
+	{
+		printf("%s\n", env[i]);
+		i++;
+	}
+	return (0);
 }

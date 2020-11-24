@@ -110,7 +110,7 @@ int print_str(char *str)
  *
  * Return: 0 on success and -1 on failure
  */
-int _help(char **args, char **env)
+int _help(char **args, char **env, gc *GC)
 {
 	char *builtin[] = {"cd", "help", "history", "alias",
 				"setenv", "unsetenv", "exit"};

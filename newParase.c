@@ -125,7 +125,7 @@ int insert_to_AOC(char **str, char **com, void ***ar, int *i, int adv)
 
 NewCmd_t **search_for_command(char *str)
 {
-	char *com = str, op;
+	char *com = str, *oldStr, op;
 	NewCmd_t *cmd, **newCmd;
 	int i = 0, nbCom = 0, st = 0;
 	void **AOC = NULL;
@@ -155,6 +155,7 @@ NewCmd_t **search_for_command(char *str)
 	insert_to_AOC(&str, &com, &AOC, &nbCom, 0);
 	AOC = insertToLastPosion(AOC, NULL, nbCom);
 	newCmd = (NewCmd_t **)AOC;
+	//free(oldStr);
 	return (newCmd);
 }
 

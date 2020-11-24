@@ -108,7 +108,7 @@ char *Clean_string(char *str, gc *GC)
 		str++;
 	}
 	trimed[i] = '\0';
-	tr = _copAlloc(trimed, GC);
+	tr = _copAlloc(trimed, 0);
 	return (tr);
 }
 /**
@@ -120,7 +120,7 @@ char *Clean_string(char *str, gc *GC)
 
 char *_trim(char **str, gc *GC)
 {
-	char trimed[500], *vide, op, *tmp;
+	char trimed[500], *vide, op, *tmp, *oldBuff = *str;
 	int i = 0, len = 0;
 	
 	for (i = 0; (*str)[i]; i++)
@@ -161,7 +161,8 @@ char *_trim(char **str, gc *GC)
 			i++;
 		}
 	}
-	tmp = Clean_string(trimed, GC);
+	tmp = Clean_string(trimed, 0);
+	free(oldBuff);
 	return (tmp);
 }
 

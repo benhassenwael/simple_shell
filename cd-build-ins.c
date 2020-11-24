@@ -30,9 +30,8 @@ int change_directory(char *str, char **env, gc *GC)
 		return (-1);
 	}
 	getcwd(newPWD, 1000);
-	_setenv(env, "PWD", newPWD, 1, GC);
-	_setenv(env, "OLDPWD", oldPWD, 1, GC);
-
+	checkAndSet(env, "PWD", newPWD, 1, GC);
+	checkAndSet(env, "OLDPWD", oldPWD, 1, GC);
 
 	printf(" newPWD = %s\n", newPWD);
 	printf(" oldPWD = %s\n", oldPWD);
@@ -47,52 +46,49 @@ int change_directory(char *str, char **env, gc *GC)
 
 /**
 * _cd - cd builting treat changes of directories handle "~" "-"
-* @cmd: pointer to struct
+* @args: array of strings null terminated
 * @env: env var
+* @GC: gc
 *
 * Return: 0
 * Error: -1
 */
-int _cd(NewCmd_t *cmd, char **env)
+int _cd(char **args, char **env, gc *GC)
 {
 	char *home = NULL, *oldPath = NULL, *fstArg = NULL, found = 0, st = 0;
-	gc GC;
 
-	GC.str_coll = malloc(sizeof(gc) * 1024);
-	GC.length = 0;
-	home = _getenv("HOME", env);
-	home = _strConcatEnv("/", home, 0, &GC);
-	oldPath = _getenv("OLDPWD", env);
-
-	if (!cmd || !cmd->args || !env)
+	if (!args[0] || !args || !env)
 		return (-1);
-	fstArg = cmd->args[1];
+	home = _getenv("HOME", env);
+	home = _strConcatEnv("/", home, 0, GC);
+	oldPath = _getenv("OLDPWD", env);
+	fstArg = args[1];
 	if (fstArg)
 	{
 		found = checkName("-", fstArg, 0);
 		if (found)
 		{
-			st = change_directory(oldPath, env, &GC);
-			free_Garbage_coll(&GC);
+			st = change_directory(oldPath, env, GC);
+			free_noInUse_GC(GC);
 			return (st < 0 ? (-1) : (0));
 		}
 		else if (checkName("~", fstArg, 0))
 		{
-			change_directory(home, env, &GC);
-			free_Garbage_coll(&GC);
+			change_directory(home, env, GC);
+			free_noInUse_GC(GC);
 			return (st < 0 ? (-1) : (0));
 		}
 		else
 		{
-			change_directory(fstArg, env, &GC);
-			free_Garbage_coll(&GC);
+			change_directory(fstArg, env, GC);
+			free_noInUse_GC(GC);
 			return (st < 0 ? (-1) : (0));
 		}
 	}
 	else
 	{
-		change_directory(home, env, &GC);
-		free_Garbage_coll(&GC);
+		change_directory(home, env, GC);
+		free_noInUse_GC(GC);
 		return (st < 0 ? (-1) : (0));
 	}
 }

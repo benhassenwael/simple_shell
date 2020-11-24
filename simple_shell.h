@@ -56,19 +56,6 @@ typedef struct exec_buit
 	int (*handleName)(char **args, char **env, gc *GC);
 } exec_buit;
 
-/**
- * struct clean_command - holds a command elements
- * @command: a given command
- * @args: array of command arguments
- * @next_oper: the logical operator after the command if it exists
- */
-typedef struct clean_command
-{
-	char *command;
-	char *args;
-	char next_oper;
-} cmd_t;
-
 void *_realloc(void *ptr, unsigned int, unsigned int);
 ssize_t _getline(char **, size_t *, int);
 int str_is_eq(char *, char *);
@@ -77,7 +64,7 @@ int _help(char **, char **, gc *GC);
 builtin_func_t get_builtin_func(NewCmd_t *);
 char *find_prog_path(char *, char **);
 NewCmd_t **search_for_command(char *);
-int exec_cmd(NewCmd_t **, char **);
+int exec_cmd(NewCmd_t **, char **, gc *GC);
 
 int _strlen(char *str);
 char *_strparse(char **buffer, char *deli);
@@ -107,6 +94,7 @@ int str_is_eq(char *str1, char *str2);
 int setttenv(char **args, char **env, gc *newGC);
 int _cd(char **args, char **env, gc *newGC);
 int _insertTo_Env_GC(gc *GC, void *vod);
+
 int exec_buit_ins(NewCmd_t *cmd, char **env, gc *GC);
 int _printEnv(char **args, char **env, gc *GC);
 int _unset_env(char **args, char **env, gc *GC);

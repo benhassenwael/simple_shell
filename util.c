@@ -86,7 +86,7 @@ char *_strConcatEnv(char *str1, char *cop, int ch, gc *newGC)
 	if (newGC)
 		_insertTo_GC(newGC, path);
 	else
-		printf("u are not allocating pls give none null pointer\n");
+		_insertTo_Env_GC(newGC, path);
 	return (path);
 }
 
@@ -108,6 +108,7 @@ int checkName(char *Name, char *ARG, char ch)
 	int i, j, found = 0;
 
 
+			printf("found %s\n", exec[i].name);
 	if (!Name || !ARG || *ARG == '\0')
 		return (0);
 	if (*Name == '\0')

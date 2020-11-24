@@ -7,7 +7,6 @@
  *
  * Return: pointer to the value of the wanted variable or
  * NULL if not found
- */
 char *_getenv(char *name, char **env)
 {
 	int i, j;
@@ -23,3 +22,4 @@ char *_getenv(char *name, char **env)
 	}
 	return (NULL);
 }
+*/
