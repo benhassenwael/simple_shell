@@ -30,8 +30,11 @@ int main(int argc, char *argv[], char **env)
 			buffer = _trim(&buffer, 0);
 			printf(" --->%s<----\n",buffer);
 			result = search_for_command(buffer);
-			_printArrayOfStrings(result[i]->args, 0);
-			exec_cmd(result, env, &GC, buffer);
+			if (result)
+			{
+				_printArrayOfStrings(result[i]->args, 0);
+				exec_cmd(result, env, &GC, buffer);
+			}
 		}
 		free_array_of_struct(result);
 		//free(buffer);
