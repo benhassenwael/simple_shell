@@ -20,7 +20,6 @@ builtin_func_t get_builtin_func(NewCmd_t *cmd)
 		{"env", _printEnv},
 		{"unsetenv", _unset_env},
 		{"history", _history},
-		{"exit", __exit},
 		{NULL, NULL}
 	};
 

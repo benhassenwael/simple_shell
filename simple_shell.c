@@ -33,16 +33,11 @@ int main(int argc, char *argv[], char **env)
 			if (result)
 			{
 				_printArrayOfStrings(result[i]->args, 0);
-				exec_cmd(result, env, &GC);
+				exec_cmd(result, env, &GC, buffer);
 			}
 			free_array_of_struct(result);
-		}
-		//free(buffer);
 			
+		}
 	} while (notatty);
-/*
-	free_GC_env(&GC);
-	free(GC.str_coll);
-*/
 	return (0);
 }
