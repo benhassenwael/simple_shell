@@ -66,7 +66,11 @@ while (*cmd_list)
 					free(prog_path);
 			}
 			else
+			{
+				print_str(name);
+				print_str(": No such file or directory\n");
 				did_succ = 0;
+			}
 		}
 	}
 	prev_op = cmd_arr->next_oper;
