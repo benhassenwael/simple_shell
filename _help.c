@@ -14,7 +14,6 @@
 "    the HOME shell variable.\n\n"\
 "    `-' is processed as the previous working directory.\n"\
 "    A null directory name is the same as the current directory.\n"\
-"    `..' is processed by removing the immediately previous pathname \n"\
 "    component back to a slash or the beginning of DIR.\n\n"\
 "    Exit Status:\n"\
 "    Returns 0 if the directory is changed, and if $PWD "\
