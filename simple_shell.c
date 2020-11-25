@@ -60,7 +60,7 @@ int main(__attribute__((unused))int argc, char *argv[], char **env)
 			}
 			_printArrayOfStrings(result[0]->args);
 		}
-		//free_array_of_struct(result);
+		/*free_array_of_struct(result);*/
 	} while (notatty);
 	__exit(NULL, &GC, result, buffer);
 	return (0);
