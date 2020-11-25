@@ -1,6 +1,7 @@
 #include "simple_shell.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
 
 /**
  * init_gc - intialize the garbage collector
@@ -46,7 +47,7 @@ int main(__attribute__((unused))int argc, char *argv[], char **env)
 	init_gc(&GC);
 	notatty = isatty(STDIN_FILENO);
 	do {
-		print_str("$ ");
+		print_str("outchell $ ");
 		err = _getline(&buffer, &n, STDIN_FILENO);
 		if (err != -1)
 		{
@@ -55,9 +56,11 @@ int main(__attribute__((unused))int argc, char *argv[], char **env)
 			if (result)
 			{
 				exec_cmd(argv[0], result, env, &GC, buffer);
+				printf(" after exec\n");
 			}
+			_printArrayOfStrings(result[0]->args);
 		}
-		free_array_of_struct(result);
+		//free_array_of_struct(result);
 	} while (notatty);
 	__exit(NULL, &GC, result, buffer);
 	return (0);
