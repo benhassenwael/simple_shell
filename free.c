@@ -11,7 +11,7 @@ void free_struct(NewCmd_t *st)
 {
 	int i = 0;
 
-	if (st)
+	if (st && st->args)
 	{
 		while (st->args[i])
 		{

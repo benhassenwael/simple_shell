@@ -67,6 +67,7 @@ while (*cmd_list)
 			if (prog_path != NULL)
 			{
 			did_succ = !exec_prog(prog_path, cmd_arr->args, env);
+			if (!str_is_eq(cmd_arr->args[0], prog_path))
 			free(prog_path);
 			}
 			else
