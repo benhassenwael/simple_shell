@@ -32,8 +32,7 @@ int init_gc(gc *GC)
  *
  * Return: always 0
  */
-int main(__attribute__((unused))int argc,
-		__attribute__((unused))char *argv[], char **env)
+int main(__attribute__((unused))int argc, char *argv[], char **env)
 {
 	char *buffer = NULL;
 	size_t n;
@@ -55,7 +54,7 @@ int main(__attribute__((unused))int argc,
 			result = search_for_command(buffer);
 			if (result)
 			{
-				exec_cmd(result, env, &GC, buffer);
+				exec_cmd(argv[0], result, env, &GC, buffer);
 			}
 		}
 		free_array_of_struct(result);

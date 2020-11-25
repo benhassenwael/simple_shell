@@ -69,7 +69,7 @@ int __exit(char **, gc *, NewCmd_t **, char *);
 builtin_func_t get_builtin_func(NewCmd_t *);
 char *find_prog_path(char *, char **);
 NewCmd_t **search_for_command(char *);
-void exec_cmd(NewCmd_t **, char **, gc *GC, char *);
+void exec_cmd(char *, NewCmd_t **, char **, gc *GC, char *);
 int print_str(char *);
 
 int _strlen(char *str);

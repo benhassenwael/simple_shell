@@ -24,6 +24,7 @@ int should_execute(int did_succ, char prev_op)
 
 /**
  * exec_cmd -  manage the execution of a given list of commands
+ * @name: program name used for error print
  * @cmd_list: list of commands
  * @env: the environment variables
  * @GC: garbage collector
@@ -31,7 +32,7 @@ int should_execute(int did_succ, char prev_op)
  *
  * Return: always 0
  */
-void exec_cmd(NewCmd_t **cmd_list, char **env, gc *GC, char *buff)
+void exec_cmd(char *name, NewCmd_t **cmd_list, char **env, gc *GC, char *buff)
 {
 	int err, did_succ = 1;
 	builtin_func_t builtin_func = NULL;
@@ -65,7 +66,8 @@ while (*cmd_list)
 			}
 			else
 			{
-				perror("command not found");
+				print_str(name);
+				print_str(": No such file or directory\n");
 				did_succ = 0;
 			}
 		}
