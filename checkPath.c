@@ -24,7 +24,7 @@ void free_path_list(char **path_list)
  */
 char **add_to_path_list(char **old_array, char *path)
 {
-	int i, size = 0;
+	int size = 0;
 	char **list = NULL;
 
 	if (old_array == NULL)

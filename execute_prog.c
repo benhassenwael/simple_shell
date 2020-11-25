@@ -11,7 +11,7 @@
 int exec_prog(char *prog, char **args, char **env)
 {
 	pid_t child_pid;
-	int status, err;
+	int status;
 
 	child_pid = fork();
 	if (child_pid == -1)

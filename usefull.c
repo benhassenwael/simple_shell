@@ -49,11 +49,11 @@ int _strlen(char *str)
 * _printArrayOfStrings - print all string in an 2D array and return the nb of
 * words
 * @ptr: pointer to an array of strings
-* @length: length
+*
 * Return: length
 */
 
-int _printArrayOfStrings(char **ptr, int length)
+int _printArrayOfStrings(char **ptr)
 {
 	int i = 0;
 

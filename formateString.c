@@ -16,7 +16,7 @@
 
 char *_strparse(char **buf, char *sep)
 {
-	int i = 0, j = 0;
+	int j = 0;
 	char *ptr;
 
 	if (!*buf || **buf == '\0')
@@ -34,13 +34,12 @@ char *_strparse(char **buf, char *sep)
 			if (**buf == sep[j])
 			{
 				**buf = '\0';
-				(*buf)++; /* dont stay on index of ' ' */
-				return (ptr); /* end loop by sending char* */
+				(*buf)++;
+				return (ptr);
 			}
 		}
 		(*buf)++;
 	}
-	/* in the las word we wont found any sep we return what we have*/
 	return (ptr);
 }
 
@@ -70,11 +69,12 @@ char *delete_comment(char **str)
 * Clean_string - create a single space before and after the operator "&&",
 * "||",";" so it can feet our logic later on, then allocate it
 * @str: str
+* @GC: gc
 *
 * Return: pointer
 */
 
-char *Clean_string(char *str, gc *GC)
+char *Clean_string(char *str, __attribute__((unused))gc * GC)
 {
 	char trimed[1024], op, *tr;
 	int i = 0;
@@ -118,11 +118,11 @@ char *Clean_string(char *str, gc *GC)
 * Return: pointer
 */
 
-char *_trim(char **str, gc *GC)
+char *_trim(char **str, __attribute__((unused))gc * GC)
 {
-	char trimed[500], *vide, op, *tmp, *oldBuff = *str;
+	char trimed[500], *vide, *tmp, *oldBuff = *str;
 	int i = 0, len = 0;
-	
+
 	for (i = 0; (*str)[i]; i++)
 		if ((*str)[i] == '\t')
 			(*str)[i] = ' ';
@@ -165,6 +165,3 @@ char *_trim(char **str, gc *GC)
 	free(oldBuff);
 	return (tmp);
 }
-
-
-

@@ -19,7 +19,7 @@ int change_directory(char *str, char **env, gc *GC)
 
 	char newPWD[1000];
 	char oldPWD[1000];
-	int i = 0, err;
+	int err;
 
 	getcwd(oldPWD, 1000);
 

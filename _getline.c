@@ -33,7 +33,7 @@ int copy_buffer(char *buffer, char **lineptr,
  */
 char *find_newline(char *arr, unsigned int n)
 {
-	int i;
+	unsigned int i;
 
 	for (i = 0; i < n; i++)
 		if (arr[i] == '\n')
@@ -55,12 +55,11 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 {
 	char buffer[1024], *newline_ptr = NULL;
 	ssize_t nread;
-	int err, i, j, line_size = 0, nwSize;
+	int err, line_size = 0;
 
 	fflush(stdout);
 	do {
 		nread = read(fd, buffer, 1023);
-		printf("_getline: nread = %d buffer = %s; \n", nread, buffer);
 		if (nread == 0 && line_size == 0)
 			return (-1);
 		newline_ptr = find_newline(buffer, nread);
