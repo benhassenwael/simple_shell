@@ -47,7 +47,7 @@ int main(__attribute__((unused))int argc, char *argv[], char **env)
 	init_gc(&GC);
 	notatty = isatty(STDIN_FILENO);
 	do {
-		print_str("outchell $ ");
+		print_str("$ ");
 		err = _getline(&buffer, &n, STDIN_FILENO);
 		if (err != -1)
 		{
@@ -56,10 +56,9 @@ int main(__attribute__((unused))int argc, char *argv[], char **env)
 			if (result)
 			{
 				exec_cmd(argv[0], result, env, &GC, buffer);
-				printf(" after exec\n");
 			}
 		}
-		/*free_array_of_struct(result);*/
+		free_array_of_struct(result);
 	} while (notatty);
 	__exit(NULL, &GC, result, buffer);
 	return (0);

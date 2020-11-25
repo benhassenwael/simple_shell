@@ -38,11 +38,6 @@ void exec_cmd(char *name, NewCmd_t **cmd_list, char **env, gc *GC, char *buff)
 	builtin_func_t builtin_func = NULL;
 	char *prog_path = NULL, prev_op = '&';
 	NewCmd_t *cmd_arr;
-	/*
-	char *prog_path = NULL, prev_op = '&';
-	NewCmd_t *cmd_arr;
-	int did_succ = 1;
-	*/
 
 while (*cmd_list)
 {
@@ -77,22 +72,7 @@ while (*cmd_list)
 				did_succ = 0;
 			}
 		}
-		/*
-			prog_path = find_prog_path(cmd_arr->args[0], env);
-			if (prog_path != NULL)
-			{
-			did_succ = !exec_prog(prog_path, cmd_arr->args, env);
-			free(prog_path);
-			}
-			else
-			{
-				print_str(name);
-				print_str(": No such file or directory\n");
-				did_succ = 0;
-			}
-			*/
 	}
-	printf(" cmd_arr->next_oper = %d\n", cmd_arr->next_oper);
 	prev_op = cmd_arr->next_oper;
 	cmd_list++;
 }
