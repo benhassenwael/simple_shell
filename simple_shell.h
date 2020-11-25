@@ -62,6 +62,7 @@ typedef struct exec_buit
 
 void *_realloc(void *ptr, unsigned int, unsigned int);
 ssize_t _getline(char **, size_t *, int);
+ssize_t readline(char **, int);
 int str_is_eq(char *, char *);
 int exec_prog(char *, char **, char **);
 int _help(char **, char **, gc *GC);

@@ -55,7 +55,7 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 {
 	char buffer[1024], *newline_ptr = NULL;
 	ssize_t nread;
-	int err, line_size = 0;
+	int i, err, line_size = 0;
 
 	fflush(stdout);
 	do {
@@ -72,9 +72,58 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 		}
 	} while (!newline_ptr && nread == 1023);
 	buffer[nread] = '\0';
+	if (newline_ptr != NULL)
+	{
+		for (i = 0; buffer[i] != '\n'; i++)
+			;
+		nread = i + 1;
+	}
 	err = copy_buffer(buffer, lineptr, line_size, nread + 1);
 	if (err == -1)
 		return (-1);
 	*n = line_size + nread;
 	return (*n);
+}
+
+/**
+ * readline - read from file descriptor line by line
+ * @lineptr: pointer to the first returning read string
+ * @fd: file descriptor to read from
+ *
+ * Return: -1 on failure
+ */
+ssize_t readline(char **lineptr, int fd)
+{
+	char buffer[1024], c = 0;
+	ssize_t nread = 1;
+	int i, line_size = 0, lines = 0;
+
+	while (c != EOF && nread != 0)
+	{
+		fflush(stdin);
+		nread = read(fd, &c, 1);
+		if (nread == 0 && line_size == 0 && lines == 0)
+			return (-1);
+		if (c == '\n')
+		{
+		lineptr[lines] = malloc(sizeof(char) * (line_size + 1));
+			for (i = 0; i < line_size; i++)
+				lineptr[lines][i] = buffer[i];
+			line_size = 0;
+			lineptr[lines++][i] = '\0';
+			lineptr[lines] = NULL;
+		}
+		else if (c != EOF)
+			buffer[line_size++] = c;
+	}
+	if (c == EOF && line_size > 1)
+	{
+		lineptr[lines] = malloc(sizeof(char) * (line_size + 1));
+		for (i = 0; i < line_size; i++)
+			lineptr[lines][i] = buffer[i];
+		line_size = 0;
+		lineptr[lines++][i] = '\0';
+		lineptr[lines] = NULL;
+	}
+	return (0);
 }
