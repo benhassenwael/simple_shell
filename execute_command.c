@@ -49,7 +49,6 @@ while (*cmd_list)
 			__exit(cmd_arr->args, GC, cmd_list, buff);
 			return;
 		}
-		/*
 		builtin_func = get_builtin_func(cmd_arr);
 		if (builtin_func != NULL)
 		{
@@ -72,18 +71,6 @@ while (*cmd_list)
 				did_succ = 0;
 			}
 		}
-		*/	
-			prog_path = find_prog_path(cmd_arr->args[0], env);
-			if (prog_path != NULL)
-			{
-			did_succ = !exec_prog(prog_path, cmd_arr->args, env);
-			free(prog_path);
-			}
-			else
-			{
-				perror("command not found");
-				did_succ = 0;
-			}
 	}
 	prev_op = cmd_arr->next_oper;
 	cmd_list++;
