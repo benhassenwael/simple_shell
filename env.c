@@ -1,6 +1,4 @@
 #include "simple_shell.h"
-#include <stdlib.h>
-#include <string.h>
 
 /**
 * delete_env - delete one variable from the array (we put the found variable
@@ -128,13 +126,10 @@ int _setenv(char **args, char **env, gc *newGC)
 {
 	char *Name = args[1];
 	char *Value = args[2];
-	char *str;
 
 	if (Name && Value)
 	{
 		checkAndSet(env, Name, Value, 1, newGC);
-		str = _getenv(Name, env);
-		printf(" created = %s\n", str);
 	}
 	free_noInUse_GC(newGC);
 	return (0);

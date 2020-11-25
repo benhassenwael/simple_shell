@@ -57,11 +57,9 @@ char *_strConcatEnv(char *str1, char *cop, int ch, gc *newGC)
 	len1 = _strlen(str1);
 	len2 = _strlen(cop);
 	length = len1 + len2 + 2;
-	/* allocate */
 	path = malloc(sizeof(char) * length);
 	if (!path)
 		return (NULL);
-	/* initialize it */
 	for (i = 0, j = 0; i < length && cop[j]; i++)
 	{
 		if (i < len1)

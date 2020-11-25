@@ -26,16 +26,12 @@ int change_directory(char *str, char **env, gc *GC)
 	err = chdir(str);
 	if (err < 0)
 	{
-		printf(" error = %d\n", err);
+		print_str(" error = failed to change directory\n");
 		return (-1);
 	}
 	getcwd(newPWD, 1000);
 	checkAndSet(env, "PWD", newPWD, 1, GC);
 	checkAndSet(env, "OLDPWD", oldPWD, 1, GC);
-
-	printf(" newPWD = %s\n", newPWD);
-	printf(" oldPWD = %s\n", oldPWD);
-
 	return (0);
 }
 

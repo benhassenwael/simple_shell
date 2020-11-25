@@ -120,7 +120,7 @@ char *Clean_string(char *str, __attribute__((unused))gc * GC)
 
 char *_trim(char **str, __attribute__((unused))gc * GC)
 {
-	char trimed[500], *vide, *tmp, *oldBuff = *str;
+	char trimed[500], *tmp, *oldBuff = *str;
 	int i = 0, len = 0;
 
 	for (i = 0; (*str)[i]; i++)

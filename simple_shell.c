@@ -47,6 +47,7 @@ int main(__attribute__((unused))int argc,
 	start_gc(&GC);
 	notatty = isatty(STDIN_FILENO);
 	do {
+		print_str("$ ");
 		err = _getline(&buffer, &n, STDIN_FILENO);
 		if (err != -1)
 		{
@@ -54,7 +55,6 @@ int main(__attribute__((unused))int argc,
 			result = search_for_command(buffer);
 			if (result)
 			{
-				_printArrayOfStrings(result[0]->args);
 				exec_cmd(result, env, &GC, buffer);
 			}
 		}

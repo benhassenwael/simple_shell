@@ -45,7 +45,6 @@ int _insertTo_GC(gc *GC, void *str)
 		return (-1);
 	p = GC->str_coll;
 	p[*len] = str;
-	printf(" we insert to no use = %s\n", (char *) str);
 	*len = *len + 1;
 	p[*len] = NULL;
 	return (0);
@@ -72,17 +71,12 @@ int free_Name_from_GC(gc *GC, char *Name)
 	while (str[i])
 	{
 		found = checkName(str[i], Name, 0);
-		printf(" found = %d\n", found);
 		if (found)
 		{
-			printf("(%s) frm GC, ", str[i]);
 			free(str[i]);
-			printf("old length  = %d\n", *length);
 			for (j = i + 1; str[i]; j++, i++)
 				str[i] = str[j];
 			*length = *length - 1;
-			printf(" p[*length] = %s\n", str[*length]);
-			printf(" *length = %d\n", *length);
 			return (0);
 		}
 		i++;
@@ -102,18 +96,15 @@ void free_GC_env(gc *GC)
 
 	if (GC == NULL)
 		return;
-	printf("------- free env -------------\n");
 	if (str != NULL)
 	{
 		for (i = 0; str[i] != NULL; i++)
 		{
-			printf("Env ( %s ) freed\n", str[i]);
 			free(str[i]);
 			*len = *len - 1;
 		}
 	}
 	free(GC->var_env);
-	printf("-------Env ok-------------\n");
 }
 
 /**
@@ -131,7 +122,6 @@ void free_noInUse_GC(gc *GC)
 
 	if (!GC)
 		return;
-	printf("----------- free local garbage-------------\n");
 	if (str)
 	{
 		for (i = 0; str[i] && *len > 0; i++)
@@ -140,6 +130,4 @@ void free_noInUse_GC(gc *GC)
 			*len = *len - 1;
 		}
 	}
-	printf(" *len = %d\n", *len);
-	printf("------------ok-------------\n");
 }

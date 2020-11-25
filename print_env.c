@@ -1,15 +1,16 @@
 #include "simple_shell.h"
 
-/*_printEnv - print all environment variables
-* args - array of strings
-* @env: environment variables
-* @GC: gc
-*
-* Return: 0
-* Error: -1
-*/
+/**
+ * _printEnv - print all environment variables
+ * @args: array of strings
+ * @env: environment variables
+ * @GC: gc
+ *
+ * Return: 0
+ * Error: -1
+ */
 
-int _printEnv(char **args, char **env, __attribute__((unused))gc *GC)
+int _printEnv(char **args, char **env, __attribute__((unused))gc * GC)
 {
 	int i = 0;
 
@@ -17,7 +18,8 @@ int _printEnv(char **args, char **env, __attribute__((unused))gc *GC)
 		return (-1);
 	while (env[i])
 	{
-		printf("%s\n", env[i]);
+		print_str(env[i]);
+		print_str("\n");
 		i++;
 	}
 	return (0);

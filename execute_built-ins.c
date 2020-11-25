@@ -12,7 +12,6 @@
 builtin_func_t get_builtin_func(NewCmd_t *cmd)
 {
 	int i = 0, found = 0;
-
 	exec_buit exec[] = {
 		{"cd", _cd},
 		{"setenv", _setenv},
@@ -22,9 +21,6 @@ builtin_func_t get_builtin_func(NewCmd_t *cmd)
 		{NULL, NULL}
 	};
 
-
-
-	/* only enter when cmd->command is not null */
 	for (i = 0; exec[i].name && cmd; i++)
 	{
 		found = str_is_eq(cmd->args[0], exec[i].name);
