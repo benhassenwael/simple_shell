@@ -61,16 +61,12 @@ while (*cmd_list)
 			prog_path = find_prog_path(cmd_arr->args[0], env);
 			if (prog_path != NULL)
 			{
-			did_succ = !exec_prog(prog_path, cmd_arr->args, env);
-			if (!str_is_eq(cmd_arr->args[0], prog_path))
-			free(prog_path);
+				did_succ = !exec_prog(prog_path, cmd_arr->args, env);
+				if (!str_is_eq(cmd_arr->args[0], prog_path))
+					free(prog_path);
 			}
 			else
-			{
-				print_str(name);
-				print_str(": No such file or directory\n");
 				did_succ = 0;
-			}
 		}
 	}
 	prev_op = cmd_arr->next_oper;
