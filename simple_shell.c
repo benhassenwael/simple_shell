@@ -58,7 +58,6 @@ int main(__attribute__((unused))int argc, char *argv[], char **env)
 				exec_cmd(argv[0], result, env, &GC, buffer);
 				printf(" after exec\n");
 			}
-			_printArrayOfStrings(result[0]->args);
 		}
 		/*free_array_of_struct(result);*/
 	} while (notatty);
