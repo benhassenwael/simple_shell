@@ -1,0 +1,53 @@
+.TH man 3 "25 November 2020" "0.20" "simple_shell man page"
+.SH NAME
+.B simple_shell
+- Formatted output conversion.
+.SH SYNOPSIS
+.B #include "simple_shell.h"
+	./hsh to use
+.SH DESCRIPTION
+.B simple_shell
+Prints to standard output
+.SH Return value
+On successful return, the status of the last function or program executed, else
+it would return some thing else.
+
+If an output error is encountered, a negative value is returned.
+.SH Format
+
+.TP
+.B Normal Programs (ls, witch, echo, git ... ) 
+all Normal program know in the unix OS are working correctily
+.TP
+.B built-ins functions
+
+.BR cd 
+	changes the curent directory and update the environment variables
+
+.BR exit  
+	exit the program with statuts given
+
+.BR help
+	help [BUILTIN] => print given built-in description function
+
+.BR setenv
+	setenv VARIABLE VALUE => set new variable to the environment variables
+			if found replace it 
+
+.BR unsetenv
+	unsetenv VARIABLE => unset environment variable
+
+.BR env 
+	print all environment variables
+
+
+.SH EXAMPLE
+./hsh
+.B	$ cd 
+
+.SH SEE ALSO
+.I printf(3)
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+Salah and Wael
