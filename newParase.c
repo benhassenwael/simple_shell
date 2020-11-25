@@ -154,11 +154,7 @@ NewCmd_t **search_for_command(char *str)
 	}
 	insert_to_AOC(&str, &com, &AOC, &nbCom, 0);
 	AOC = insertToLastPosion(AOC, NULL, nbCom);
-<<<<<<< HEAD
 	newCmd = (NewCmd_t **)AOC;
-=======
-	newCmd = (NewCmd_t **)AOC;	
->>>>>>> bc17f9ada3066012012dd93a3fb2d88ce670d831
 	return (newCmd);
 }
 
