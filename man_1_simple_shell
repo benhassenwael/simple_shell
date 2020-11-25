@@ -16,15 +16,15 @@ If an output error is encountered, a negative value is returned.
 .SH Format
 
 .TP
-.B Normal Programs (ls, witch, echo, git ... ) 
+.B Normal Programs (ls, witch, echo, git ... )
 all Normal program know in the unix OS are working correctily
 .TP
 .B built-ins functions
 
-.BR cd 
+.BR cd
 	changes the curent directory and update the environment variables
 
-.BR exit  
+.BR exit
 	exit the program with statuts given
 
 .BR help
@@ -32,18 +32,18 @@ all Normal program know in the unix OS are working correctily
 
 .BR setenv
 	setenv VARIABLE VALUE => set new variable to the environment variables
-			if found replace it 
+			if found replace it
 
 .BR unsetenv
 	unsetenv VARIABLE => unset environment variable
 
-.BR env 
+.BR env
 	print all environment variables
 
 
 .SH EXAMPLE
 ./hsh
-.B	$ cd 
+.B	$ cd
 
 .SH SEE ALSO
 .I printf(3)

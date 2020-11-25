@@ -31,7 +31,7 @@ typedef struct NewCmd_t
  * struct G_collecttor - holds an array of pointer to be freed
  * @str_coll: an array of pointers
  * @length: length of array
- * @env_legnt: env_legth
+ * @env_legth: env_legth
  * @var_env: array of var
  */
 
@@ -44,12 +44,16 @@ typedef struct G_collecttor
 } gc;
 
 /**
- * struct exc_built - holds a func to execute
+ * builtin_func_t - blabal
+ */
+typedef int (*builtin_func_t) (char **args, char *env[], gc *GC);
+
+/**
+ * struct exec_buit - holds a func to execute
  * @name: name of a func to execute
  * @handleName: func to execute
  * this a typedef named built_func_t: for pointer to the built-in function
  */
-typedef int (*builtin_func_t) (char **args, char *env[], gc *GC);
 typedef struct exec_buit
 {
 	char *name;
@@ -59,7 +63,7 @@ typedef struct exec_buit
 void *_realloc(void *ptr, unsigned int, unsigned int);
 ssize_t _getline(char **, size_t *, int);
 int str_is_eq(char *, char *);
-int exec_prog(char *,char **, char **);
+int exec_prog(char *, char **, char **);
 int _help(char **, char **, gc *GC);
 int __exit(char **, gc *, NewCmd_t **, char *);
 builtin_func_t get_builtin_func(NewCmd_t *);
