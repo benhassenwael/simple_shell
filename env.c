@@ -3,21 +3,19 @@
 #include <string.h>
 
 /**
-* _delete_env - delete one variable from the array (we put the found variable
+* delete_env - delete one variable from the array (we put the found variable
 * at the last postion and since **env is null terminated it wont bet seen for
 * any other changes)
 * @env: poiter to the environ array of string
 * @Name: var name to delete
+* @GC: garbage collector
 *
 * Return: 0
 * Error: -1
 */
-
-
 int delete_env(char **env, char *Name, gc *GC)
 {
-	int i, found = 0, j = 0, k = 0;
-	char *str;
+	int i, found = 0, j = 0;
 
 	i = 0;
 	while (env[i])
@@ -44,19 +42,19 @@ int delete_env(char **env, char *Name, gc *GC)
  * Return: 0
  * Error: -1
  */
-
 int _unset_env(char **args, char **env, gc *GC)
 {
 	char *Name = args[1];
 
 	if (!args || !env || args[2])
 		return (-1);
-	
 	delete_env(env, Name, GC);
-
+	return (0);
 }
+
 /**
-* _setenv - take the name and the value of the Variable u want to add to the
+* checkAndSet - take the name and the value of the Variable u want to add
+* to the
 * environment variables, check if u want to overwrite it if it exist.
 * @env: poiter to an array of strings
 * @Name: name of the variable
@@ -66,15 +64,12 @@ int _unset_env(char **args, char **env, gc *GC)
 * Return: 0
 * Error: -1
 */
-
 int checkAndSet(char **env, char *Name, char *value, int overwrite, gc *GC)
 {
 	int i = 0, found = 0;
-	char *oldEnv = NULL;
 
 	while (env[i])
 	{
-		/* we check if the Name exit and if we found '=' */
 		found = checkName(Name, env[i], '=');
 		if (found == 2)
 			return (-1);
@@ -82,7 +77,6 @@ int checkAndSet(char **env, char *Name, char *value, int overwrite, gc *GC)
 		{
 			if (overwrite)
 			{
-				oldEnv = env[i];
 				env[i] = _strConcatEnv(Name, value, '=', 0);
 				_insertTo_Env_GC(GC, env[i]);
 				return (0);
@@ -90,7 +84,6 @@ int checkAndSet(char **env, char *Name, char *value, int overwrite, gc *GC)
 		}
 		i++;
 	}
-
 	env[i] = _strConcatEnv(Name, value, '=', 0);
 	_insertTo_Env_GC(GC, env[i]);
 	env[i + 1] = NULL;
@@ -123,9 +116,14 @@ char *_getenv(char *name, char **env)
 	return (NULL);
 }
 
-
-
-
+/**
+ * _setenv - built-in func set an environment variable
+ * @args: arguments
+ * @env: env varaibles
+ * @newGC: garbage collector
+ *
+ * Return: 0
+ */
 int _setenv(char **args, char **env, gc *newGC)
 {
 	char *Name = args[1];
@@ -139,29 +137,5 @@ int _setenv(char **args, char **env, gc *newGC)
 		printf(" created = %s\n", str);
 	}
 	free_noInUse_GC(newGC);
-	return (0);
-}
-
-
-/*_printEnv - print all environment variables
-* args - array of strings
-* @env: environment variables
-* @GC: gc
-*
-* Return: 0
-* Error: -1
-*/
-
-int _printEnv(char **args, char **env, gc *GC)
-{
-	int i = 0;
-
-	if (!args || !env)
-		return (-1);
-	while (env[i])
-	{
-		printf("%s\n", env[i]);
-		i++;
-	}
 	return (0);
 }

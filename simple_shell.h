@@ -65,7 +65,8 @@ int __exit(char **, gc *, NewCmd_t **, char *);
 builtin_func_t get_builtin_func(NewCmd_t *);
 char *find_prog_path(char *, char **);
 NewCmd_t **search_for_command(char *);
-int exec_cmd(NewCmd_t **, char **, gc *GC, char *);
+void exec_cmd(NewCmd_t **, char **, gc *GC, char *);
+int print_str(char *);
 
 int _strlen(char *str);
 char *_strparse(char **buffer, char *deli);
@@ -83,7 +84,7 @@ char *_copAlloc(char *str, gc *GC);
 char *delete_comment(char **str);
 char *_strparse(char **buf, char *sep);
 char *extractValue(char *Name, char *STR);
-int _printArrayOfStrings(char **ptr, int length);
+int _printArrayOfStrings(char **ptr);
 int _insertTo_GC(gc *GC, void *str);
 void *_realloc(void *ptr, unsigned int, unsigned int);
 ssize_t _getline(char **, size_t *, int);

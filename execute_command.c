@@ -24,17 +24,18 @@ int should_execute(int did_succ, char prev_op)
 
 /**
  * exec_cmd -  manage the execution of a given list of commands
- * @cmd_arr: list of commands
+ * @cmd_list: list of commands
  * @env: the environment variables
+ * @GC: garbage collector
+ * @buff: buffer
  *
  * Return: always 0
  */
-int exec_cmd(NewCmd_t **cmd_list, char **env, gc *GC, char *buff)
+void exec_cmd(NewCmd_t **cmd_list, char **env, gc *GC, char *buff)
 {
-	int err;
+	int err, did_succ = 1;
 	builtin_func_t builtin_func = NULL;
 	char *prog_path = NULL, prev_op = '&';
-	int did_succ = 1;
 	NewCmd_t *cmd_arr;
 
 while (*cmd_list)
@@ -45,6 +46,7 @@ while (*cmd_list)
 		if (str_is_eq(cmd_arr->args[0], "exit"))
 		{
 			__exit(cmd_arr->args, GC, cmd_list, buff);
+			return;
 		}
 		builtin_func = get_builtin_func(cmd_arr);
 		if (builtin_func != NULL)
@@ -57,7 +59,10 @@ while (*cmd_list)
 		{
 			prog_path = find_prog_path(cmd_arr->args[0], env);
 			if (prog_path != NULL)
+			{
 			did_succ = !exec_prog(prog_path, cmd_arr->args, env);
+			free(prog_path);
+			}
 			else
 			{
 				perror("command not found");
@@ -68,24 +73,4 @@ while (*cmd_list)
 	prev_op = cmd_arr->next_oper;
 	cmd_list++;
 }
-return (0);
 }
-/**
-void main(int c, char **v, char **env)
-{
-	NewCmd_t cmd, cmd1;
-
-	cmd.args = malloc(sizeof(char *) * 3);
-	cmd.args[0] = "help";
-	cmd.args[1] = "cd";
-	cmd.args[2] = NULL;
-	cmd.next_oper = '|';
-	cmd1.args = malloc(sizeof(char *) * 3);
-	cmd1.args[0] = "help";
-	cmd1.args[1] = "cd";
-	cmd1.args[2] = NULL;
-	cmd1.next_oper = '|';
-	NewCmd_t cmd_list[] = {cmd, cmd1, NULL};
-
-	exec_cmd(cmd_list, env);
-}*/

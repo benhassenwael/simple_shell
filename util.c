@@ -29,7 +29,6 @@ char *_copAlloc(char *str, gc *GC)
 		ptr[i] = str[i];
 	}
 	ptr[i] = '\0';
-	/* ptr is initialized we can add it to GC */
 	if (GC)
 		_insertTo_GC(GC, ptr);
 
@@ -48,7 +47,7 @@ char *_copAlloc(char *str, gc *GC)
 
 char *_strConcatEnv(char *str1, char *cop, int ch, gc *newGC)
 {
-	char *ptr1 = NULL, *ptr2 = NULL, *path = NULL;
+	char *path = NULL;
 	int len1 = 0, len2 = 0, length = 0, i = 0, j = 0;
 
 	if (!cop)

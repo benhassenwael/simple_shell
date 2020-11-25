@@ -1,22 +1,29 @@
 #include "simple_shell.h"
 #include <stdlib.h>
-/*
-*/
+
+/**
+ * _insertTo_Env_GC - insert env variable to GC
+ * @GC: gc
+ * @vod: vod
+ *
+ * Return: 0 or -1
+ */
 int _insertTo_Env_GC(gc *GC, void *vod)
 {
 
 	void **p;
-	int *len = &(GC->env_legth), i = 0;
+	int *len;
 
 	if (!GC || !vod)
 		return (-1);
+	len = &(GC->env_legth);
 	p = GC->var_env;
 	p[*len] = vod;
-	printf(" we insert ENV = %s\n",(char *) vod);
 	*len = *len + 1;
 	p[*len] = NULL;
 	return (0);
 }
+
 /**
 * _insertTo_GC - when declaring a string in the heap this function take a
 * pointer to that str (the string must be initialized ) and insert it to
@@ -31,23 +38,26 @@ int _insertTo_Env_GC(gc *GC, void *vod)
 
 int _insertTo_GC(gc *GC, void *str)
 {
-
 	void **p;
-	int *len = &(GC->length), i = 0;
+	int *len = &(GC->length);
 
 	if (!GC || !str)
 		return (-1);
 	p = GC->str_coll;
 	p[*len] = str;
-	printf(" we insert to no use = %s\n",(char *) str);
+	printf(" we insert to no use = %s\n", (char *) str);
 	*len = *len + 1;
 	p[*len] = NULL;
 	return (0);
 }
-/* insert new string in last position*/
-/* increment the length*/
-/* NULL terminated array*/
 
+/**
+ * free_Name_from_GC - free from GC
+ * @GC: gc
+ * @Name: name
+ *
+ * Return: 0 or -1
+ */
 int free_Name_from_GC(gc *GC, char *Name)
 {
 	void **p = NULL;
@@ -80,58 +90,56 @@ int free_Name_from_GC(gc *GC, char *Name)
 	return (-1);
 }
 
+/**
+ * free_GC_env - free gc env
+ * @GC: gc
+ */
 void free_GC_env(gc *GC)
 {
 	int i = 0;
 	char **str = (char **) GC->var_env;
 	int *len = &GC->env_legth;
-	if (!GC)
+
+	if (GC == NULL)
 		return;
-
-	/* free each string existing*/
-	
-
 	printf("------- free env -------------\n");
-	for (i = 0; str[i]; i++)
+	if (str != NULL)
 	{
-		printf("Env ( %s ) freed\n", str[i]);
-		free(str[i]);
-		*len = *len - 1;
+		for (i = 0; str[i] != NULL; i++)
+		{
+			printf("Env ( %s ) freed\n", str[i]);
+			free(str[i]);
+			*len = *len - 1;
+		}
 	}
 	free(GC->var_env);
 	printf("-------Env ok-------------\n");
-
-
 }
+
 /**
-* free_Garbage_coll - free each element in the array of string in the struct gc
+* free_noInUse_GC - free each element in the array of string in the struct gc
 * and then free the array of string allocated
 * @GC: pointet to struct gc
 *
 * Return: void
 */
-
 void free_noInUse_GC(gc *GC)
 {
 	int i = 0;
 	char **str = (char **) GC->str_coll;
 	int *len = &GC->length;
+
 	if (!GC)
 		return;
-
-	/* free each string existing*/
-
 	printf("----------- free local garbage-------------\n");
-	for (i = 0; str[i]; i++)
+	if (str)
 	{
-		printf("no use %s freed\n", str[i]);
-		free(GC->str_coll[i]);
-		*len = *len - 1;
+		for (i = 0; str[i] && *len > 0; i++)
+		{
+			free(GC->str_coll[i]);
+			*len = *len - 1;
+		}
 	}
-	free(str[i]);
 	printf(" *len = %d\n", *len);
 	printf("------------ok-------------\n");
-	/*
-	*/
-	/* free NULL (defaul initialisation)*/
 }

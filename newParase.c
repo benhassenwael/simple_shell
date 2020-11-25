@@ -51,8 +51,8 @@ NewCmd_t *create_struct(char **str, char op)
 {
 	void **args = 0;
 	char *tmp = NULL;
-	int nbOfargs = 0, i = 0;
-	NewCmd_t *cmd, *stop;
+	int nbOfargs = 0;
+	NewCmd_t *cmd;
 
 	if (**str == '\0' || !*str)
 		return (NULL);
@@ -92,7 +92,7 @@ NewCmd_t *create_struct(char **str, char op)
 int insert_to_AOC(char **str, char **com, void ***ar, int *i, int adv)
 {
 	NewCmd_t *cmd;
-	char **t, op;
+	char op;
 
 	op = **str;
 	**str = '\0';
@@ -125,9 +125,9 @@ int insert_to_AOC(char **str, char **com, void ***ar, int *i, int adv)
 
 NewCmd_t **search_for_command(char *str)
 {
-	char *com = str, *oldStr, op;
-	NewCmd_t *cmd, **newCmd;
-	int i = 0, nbCom = 0, st = 0;
+	char *com = str;
+	NewCmd_t **newCmd;
+	int nbCom = 0;
 	void **AOC = NULL;
 
 	if (!str)

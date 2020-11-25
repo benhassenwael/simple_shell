@@ -107,16 +107,18 @@ int print_str(char *str)
  * built-in commands
  * @args: a null terminated array of arguments
  * @env: environment variables
+ * @GC: garbage collector
  *
  * Return: 0 on success and -1 on failure
  */
-int _help(char **args, char **env, gc *GC)
+int _help(char **args, __attribute__((unused))char **env,
+		__attribute__((unused))gc * GC)
 {
 	char *builtin[] = {"cd", "help", "history", "alias",
 				"setenv", "unsetenv", "exit"};
 	char *txt_arr[] = {CD_TXT, HELP_TXT, HISTORY_TXT, ALIAS_TXT,
 				SETENV_TXT, UNSETENV_TXT, EXIT_TXT};
-	char *txt, *arg;
+	char *arg;
 	int exist = 0, builtin_i, args_i = 1;
 
 	if (args[1] == NULL)
