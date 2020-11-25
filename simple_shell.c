@@ -8,7 +8,7 @@
  *
  * Return: always 0
  */
-int start_gc(gc *GC)
+int init_gc(gc *GC)
 {
 	int i;
 
@@ -44,7 +44,7 @@ int main(__attribute__((unused))int argc,
 	int notatty;
 
 	signal(SIGINT, SIG_IGN);
-	start_gc(&GC);
+	init_gc(&GC);
 	notatty = isatty(STDIN_FILENO);
 	do {
 		print_str("$ ");
