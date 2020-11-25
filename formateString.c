@@ -142,10 +142,10 @@ char *_trim(char **str, __attribute__((unused))gc * GC)
 	trimed[i] = '\0';
 	if (*trimed == '\0')
 		return (NULL);
-	len = strlen(trimed);
+	len = _strlen(trimed);
 	if (trimed[len - 1] == ' ' || trLen('\t') || trLen('\n'))
 		trimed[len - 1] = '\0';
-	len = strlen(trimed);
+	len = _strlen(trimed);
 	if (trimed[len - 1] == ' ' || trLen('\t') || trLen('\n'))
 		trimed[len - 1] = '\0';
 	if (trimed[0] == ' ' || trimed[0] == '\t' || trimed[0] == '\n')
