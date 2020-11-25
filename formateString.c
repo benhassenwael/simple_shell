@@ -131,12 +131,8 @@ char *_trim(char **str, gc *GC)
 	{
 		if (**str == ' ')
 		{
-			vide = *str + 1;
-			while (*vide == ' ')
-			{
-				vide++;
+			while (*(*str + 1) == ' ')
 				(*str)++;
-			}
 		}
 		trimed[i] = **str;
 		i++;
