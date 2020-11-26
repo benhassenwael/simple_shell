@@ -71,4 +71,15 @@ int _printArrayOfStrings(char **ptr)
 	_putchar('\n');
 	return (i);
 }
-
+/**
+ * signal_to_handel - Handle ^C
+ * @sig:Captured Signal
+ * Return: Void
+ */
+void signal_to_handel(int sig)
+{
+	if (sig == SIGINT)
+	{
+		print_str("\n$ ");
+	}
+}
