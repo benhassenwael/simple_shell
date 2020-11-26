@@ -73,16 +73,12 @@ int run_once(char *name, char **env, gc *GC)
 int main(__attribute__((unused))int argc, char *argv[], char **env)
 {
 	char *buffer = NULL;
-	size_t n;
-	ssize_t err;
 
 	gc GC;
 	NewCmd_t **result = NULL;
-	int notatty;
 
 	signal(SIGINT, signal_to_handel);
 	init_gc(&GC);
-	notatty = isatty(STDIN_FILENO);
 	/*
 	if (!notatty)
 		run_once(argv[0], env, &GC);
