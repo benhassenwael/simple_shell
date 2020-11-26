@@ -129,7 +129,7 @@ ssize_t readline(char **lineptr, int fd)
 */
 
 
-char *_getline()
+char *_getline(gc *GC)
 {
 	int i, buffsize = 1024, rd;
 	char c = 0;
@@ -146,10 +146,7 @@ char *_getline()
 		fflush(stdin);
 		rd = read(STDIN_FILENO, &c, 1);
 		if (rd == 0)
-		{
-			free(buff);
-			exit(EXIT_SUCCESS);
-		}
+			__exit(NULL, GC, NULL, buff);
 		buff[i] = c;
 		if (buff[0] == '\n')
 		{

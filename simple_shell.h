@@ -115,7 +115,7 @@ int _history(char **args, char **env, gc *GC);
 
 NewCmd_t **search_for_command(char *str);
 void signal_to_handel(int sig);
-char *_getline();
+char *_getline(gc *GC);
 
 
 

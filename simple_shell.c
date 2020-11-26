@@ -14,9 +14,13 @@ int init_gc(gc *GC)
 {
 	int i;
 
-	GC->str_coll = malloc(sizeof(gc) * 1024);
-	GC->var_env = malloc(sizeof(gc) * 1024);
-	for (i = 0; i < 1024; i++)
+	GC->str_coll = malloc(sizeof(gc) * 200);
+	if (!(GC->str_coll))
+		exit(-1);
+	GC->var_env = malloc(sizeof(gc) * 200);
+	if (!(GC->var_env))
+		exit(-1);
+	for (i = 0; i < 200; i++)
 	{
 		GC->str_coll[i] = NULL;
 		GC->var_env[i] = 0;
@@ -79,15 +83,10 @@ int main(__attribute__((unused))int argc, char *argv[], char **env)
 
 	signal(SIGINT, signal_to_handel);
 	init_gc(&GC);
-	/*
-	if (!notatty)
-		run_once(argv[0], env, &GC);
-	else
-	{
-	*/
 	do {
-		print_str("$ ");
-		buffer = _getline();
+		if (isatty(STDIN_FILENO))
+			print_str("$ ");
+		buffer = _getline(&GC);
 		if (buffer[0] == '\0')
 			continue;
 		if (buffer)
@@ -98,8 +97,6 @@ int main(__attribute__((unused))int argc, char *argv[], char **env)
 				exec_cmd(argv[0], result, env, &GC, buffer);
 		}
 		free_array_of_struct(result);
-		free_GC_env(&GC);
-		free(GC.str_coll);
 		free(buffer);
 	} while (1);
 	__exit(NULL, &GC, result, buffer);
