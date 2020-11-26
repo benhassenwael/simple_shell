@@ -61,7 +61,9 @@ typedef struct exec_buit
 } exec_buit;
 
 void *_realloc(void *ptr, unsigned int, unsigned int);
-ssize_t _getline(char **, size_t *, int);
+/*
+ ssize_t _getline(char **, size_t *, int);
+ * */
 ssize_t readline(char **, int);
 int str_is_eq(char *, char *);
 int exec_prog(char *, char **, char **);
@@ -92,7 +94,6 @@ char *extractValue(char *Name, char *STR);
 int _printArrayOfStrings(char **ptr);
 int _insertTo_GC(gc *GC, void *str);
 void *_realloc(void *ptr, unsigned int, unsigned int);
-ssize_t _getline(char **, size_t *, int);
 NewCmd_t *parseLine(char *line);
 /*
 */
@@ -113,7 +114,8 @@ int _Appand_command(char *str, char *fileName, gc *GC);
 int _history(char **args, char **env, gc *GC);
 
 NewCmd_t **search_for_command(char *str);
-
+void signal_to_handel(int sig);
+char *_getline();
 
 
 

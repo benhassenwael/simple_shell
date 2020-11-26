@@ -50,7 +50,6 @@ char *find_newline(char *arr, unsigned int n)
  * @fd: file descriptor to read from
  *
  * Return: -1 on failure and line size on success
- */
 ssize_t _getline(char **lineptr, size_t *n, int fd)
 {
 	char buffer[1024], *newline_ptr = NULL;
@@ -84,6 +83,7 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 	*n = line_size + nread;
 	return (*n);
 }
+*/
 
 /**
  * readline - read from file descriptor line by line
@@ -91,7 +91,6 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
  * @fd: file descriptor to read from
  *
  * Return: -1 on failure
- */
 ssize_t readline(char **lineptr, int fd)
 {
 	char buffer[1024], c = 0;
@@ -126,4 +125,46 @@ ssize_t readline(char **lineptr, int fd)
 		lineptr[lines] = NULL;
 	}
 	return (0);
+}
+*/
+
+
+char *_getline()
+{
+	int i, buffsize = 1024, rd;
+	char c = 0;
+	char *buff = malloc(buffsize);
+
+	if (buff == NULL)
+	{
+		free(buff);
+		return (NULL);
+	}
+
+	for (i = 0; c != EOF && c != '\n'; i++)
+	{
+		fflush(stdin);
+		rd = read(STDIN_FILENO, &c, 1);
+		if (rd == 0)
+		{
+			free(buff);
+			exit(EXIT_SUCCESS);
+		}
+		buff[i] = c;
+		if (buff[0] == '\n')
+		{
+			free(buff);
+			return ("\0");
+		}
+		if (i >= buffsize)
+		{
+			buff = _realloc(buff, buffsize, buffsize + 1);
+			if (buff == NULL)
+			{
+				return (NULL);
+			}
+		}
+	}
+	buff[i] = '\0';
+	return (buff);
 }

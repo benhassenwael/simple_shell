@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 /**
  * init_gc - intialize the garbage collector
@@ -32,7 +33,6 @@ int init_gc(gc *GC)
  * @GC: garbage collector
  *
  * Return: -1 on failure
- */
 int run_once(char *name, char **env, gc *GC)
 {
 	char **array, *buffer = NULL;
@@ -60,11 +60,12 @@ int run_once(char *name, char **env, gc *GC)
 	exit(0);
 	return (0);
 }
+*/
 
 /**
  * main - main function
- * @argc: arguments count
  * @argv: arguments vector
+ * @argc: arguments count
  * @env: environment variables
  *
  * Return: always 0
@@ -79,17 +80,21 @@ int main(__attribute__((unused))int argc, char *argv[], char **env)
 	NewCmd_t **result = NULL;
 	int notatty;
 
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, signal_to_handel);
 	init_gc(&GC);
 	notatty = isatty(STDIN_FILENO);
+	/*
 	if (!notatty)
 		run_once(argv[0], env, &GC);
 	else
 	{
+	*/
 	do {
 		print_str("$ ");
-		err = _getline(&buffer, &n, STDIN_FILENO);
-		if (err != -1)
+		buffer = _getline();
+		if (buffer[0] == '\0')
+			continue;
+		if (buffer)
 		{
 			buffer = _trim(&buffer, 0);
 			result = search_for_command(buffer);
@@ -97,8 +102,10 @@ int main(__attribute__((unused))int argc, char *argv[], char **env)
 				exec_cmd(argv[0], result, env, &GC, buffer);
 		}
 		free_array_of_struct(result);
-	} while (notatty);
+		free_GC_env(&GC);
+		free(GC.str_coll);
+		free(buffer);
+	} while (1);
 	__exit(NULL, &GC, result, buffer);
-	}
 	return (0);
 }
