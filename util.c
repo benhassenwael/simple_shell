@@ -170,3 +170,38 @@ char *extractValue(char *Name, char *STR)
 	return (ptr);
 }
 
+/**
+ * _itoa - Convert Integer To Char
+ * @n: Int To Convert
+ * Return: Char Pointer
+ */
+char *_itoa(unsigned int n)
+{
+	int len = 1, i = 0, nb = 0, pw = 1;
+	char *s;
+
+
+	nb = n;
+	do {
+		pw *= 10;
+		nb /= 10;
+		len++;
+	} while (nb != 0);
+	pw /= 10;
+	s = malloc(len);
+	if (!s)
+		return (NULL);
+	s[len - 1] = '\0';
+	while (n / 10)
+	{
+		s[i] = (n / pw) + '0';
+		n %= pw;
+		i++;
+		pw /= 10;
+	}
+	s[i] = (n % 10) + '0';
+	return (s);
+}
+
+
+

@@ -1,4 +1,5 @@
 #include "simple_shell.h"
+#include <stdlib.h>
 
 /**
  * __exit - exit built-in func
@@ -6,13 +7,15 @@
  * @GC: garbage collector
  * @res: cammands list
  * @buff: buffer
+ * @st: pointer to status
  *
  * Return: -1 only on failure
  */
-int __exit(char **args, gc *GC, NewCmd_t **res, char *buff)
+int __exit(char **args, gc *GC, NewCmd_t **res, char *buff, int *st)
 {
 	int i, val = 0;
-	char *status;
+	char *status, *alpha;
+
 
 	if (args == NULL || args[1] == NULL)
 	{
@@ -20,25 +23,23 @@ int __exit(char **args, gc *GC, NewCmd_t **res, char *buff)
 		free(GC->str_coll);
 		free(buff);
 		free_array_of_struct(res);
-		exit(0);
+		exit(WEXITSTATUS(*st));
 	}
 	status = args[1];
-	for (i = 0; status[i]; i++)
+	val = _isInteger(status);
+	if (!val)
 	{
-		if (status[i] >= '0' && status[i] <= '9')
-		{
-			val *= 10;
-			val += status[i] - '0';
-		}
-		else
-		{
-			print_str("Error: wrong parameter type\n");
-			return (-1);
-		}
+		print_str("./hsh: 1: exit: Illegal number: ");
+		print_str(status);
+		print_str("\n");
+		exit(2);
 	}
-	free_GC_env(GC);
-	free(GC->str_coll);
-	free(buff);
-	free_array_of_struct(res);
-	exit(val);
+	else
+	{
+		free_GC_env(GC);
+		free(GC->str_coll);
+		free(buff);
+		free_array_of_struct(res);
+		exit(val);
+	}
 }

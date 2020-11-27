@@ -5,13 +5,13 @@
  * @prog: full path of the program
  * @args: arguments for the program
  * @env: environment variables
+ * @st: pointer to status
  *
  * Return: the exit status of the executed program or -1 on failure
  */
-int exec_prog(char *prog, char **args, char **env)
+int exec_prog(char *prog, char **args, char **env, int *st)
 {
 	pid_t child_pid;
-	int status;
 
 	child_pid = fork();
 	if (child_pid == -1)
@@ -27,8 +27,8 @@ int exec_prog(char *prog, char **args, char **env)
 	}
 	else
 	{
-		wait(&status);
-		return (status);
+		wait(st);
+		return (WEXITSTATUS(*st));
 	}
-	return (0);
+	return (WEXITSTATUS(*st));
 }

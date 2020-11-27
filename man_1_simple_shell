@@ -1,12 +1,13 @@
 .TH man 3 "25 November 2020" "0.20" "simple_shell man page"
 .SH NAME
 .B simple_shell
-- Formatted output conversion.
+- is a link between the user and the OS, it interprate command-line typed by
+the user and execute funtion/program
 .SH SYNOPSIS
 .B #include "simple_shell.h"
 	./hsh to use
 .SH DESCRIPTION
-.B simple_shell
+.B simple_shell is standard command interpreter for the system
 Prints to standard output
 .SH Return value
 On successful return, the status of the last function or program executed, else
@@ -42,11 +43,11 @@ all Normal program know in the unix OS are working correctily
 
 
 .SH EXAMPLE
-./hsh
+.B ./hsh
 .B	$ cd
 
 .SH SEE ALSO
-.I printf(3)
+	man ./man_1_simple_shell
 .SH BUGS
 No known bugs.
 .SH AUTHOR

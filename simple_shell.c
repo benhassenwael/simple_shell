@@ -77,6 +77,7 @@ int run_once(char *name, char **env, gc *GC)
 int main(__attribute__((unused))int argc, char *argv[], char **env)
 {
 	char *buffer = NULL;
+	int st = 0;
 
 	gc GC;
 	NewCmd_t **result = NULL;
@@ -86,7 +87,7 @@ int main(__attribute__((unused))int argc, char *argv[], char **env)
 	do {
 		if (isatty(STDIN_FILENO))
 			print_str("$ ");
-		buffer = _getline(&GC);
+		buffer = _getline(&GC, &st);
 		if (buffer[0] == '\0')
 			continue;
 		if (buffer)
@@ -94,11 +95,10 @@ int main(__attribute__((unused))int argc, char *argv[], char **env)
 			buffer = _trim(&buffer, 0);
 			result = search_for_command(buffer);
 			if (result)
-				exec_cmd(argv[0], result, env, &GC, buffer);
+				exec_cmd(argv[0], result, env, &GC, buffer, &st);
 		}
 		free_array_of_struct(result);
 		free(buffer);
 	} while (1);
-	__exit(NULL, &GC, result, buffer);
 	return (0);
 }

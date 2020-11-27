@@ -11,6 +11,10 @@
 #include <signal.h>
 #include <fcntl.h>
 
+
+
+
+extern char **environ;
 /**
  * struct NewCmd_t - holds a command needs
  * @args: an array of pointer tostruct
@@ -61,18 +65,15 @@ typedef struct exec_buit
 } exec_buit;
 
 void *_realloc(void *ptr, unsigned int, unsigned int);
-/*
- ssize_t _getline(char **, size_t *, int);
- * */
 ssize_t readline(char **, int);
 int str_is_eq(char *, char *);
-int exec_prog(char *, char **, char **);
+int exec_prog(char *, char **, char **, int *st);
 int _help(char **, char **, gc *GC);
-int __exit(char **, gc *, NewCmd_t **, char *);
+int __exit(char **, gc *, NewCmd_t **, char *, int *st);
 builtin_func_t get_builtin_func(NewCmd_t *);
 char *find_prog_path(char *, char **);
 NewCmd_t **search_for_command(char *);
-void exec_cmd(char *, NewCmd_t **, char **, gc *GC, char *);
+void exec_cmd(char *, NewCmd_t **, char **, gc *GC, char *, int *st);
 int print_str(char *);
 
 int _strlen(char *str);
@@ -95,8 +96,7 @@ int _printArrayOfStrings(char **ptr);
 int _insertTo_GC(gc *GC, void *str);
 void *_realloc(void *ptr, unsigned int, unsigned int);
 NewCmd_t *parseLine(char *line);
-/*
-*/
+
 int free_array_of_struct(NewCmd_t **arr);
 int str_is_eq(char *str1, char *str2);
 int setttenv(char **args, char **env, gc *newGC);
@@ -115,7 +115,11 @@ int _history(char **args, char **env, gc *GC);
 
 NewCmd_t **search_for_command(char *str);
 void signal_to_handel(int sig);
-char *_getline(gc *GC);
+char *_getline(gc *GC, int *st);
+char *_itoa(unsigned int n);
+void print_cmd_error(char *args, char *input, int counter);
+int _isalpha(int c);
+int _isInteger(char *str);
 
 
 

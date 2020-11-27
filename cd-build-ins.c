@@ -26,6 +26,7 @@ int change_directory(char *str, char **env, gc *GC)
 	err = chdir(str);
 	if (err < 0)
 	{
+		printf("./hsh: 1: cd: can't cd to /hbtn\n");
 		print_str(" error = failed to change directory\n");
 		return (-1);
 	}
@@ -51,11 +52,12 @@ int change_directory(char *str, char **env, gc *GC)
 */
 int _cd(char **args, char **env, gc *GC)
 {
-	char *home = NULL, *oldPath = NULL, *fstArg = NULL, found = 0, st = 0;
+	char *home, *oldPath , *fstArg = NULL, found = 0, st = 0, *PWD = NULL;
 
 	if (!args[0] || !args || !env)
 		return (-1);
 	home = _getenv("HOME", env);
+	PWD = _getenv("PWD", env);
 	home = _strConcatEnv("/", home, 0, GC);
 	oldPath = _getenv("OLDPWD", env);
 	fstArg = args[1];
@@ -68,12 +70,6 @@ int _cd(char **args, char **env, gc *GC)
 			free_noInUse_GC(GC);
 			return (st < 0 ? (-1) : (0));
 		}
-		else if (checkName("~", fstArg, 0))
-		{
-			change_directory(home, env, GC);
-			free_noInUse_GC(GC);
-			return (st < 0 ? (-1) : (0));
-		}
 		else
 		{
 			change_directory(fstArg, env, GC);
@@ -83,6 +79,8 @@ int _cd(char **args, char **env, gc *GC)
 	}
 	else
 	{
+		if (!home)
+			home = PWD;
 		change_directory(home, env, GC);
 		free_noInUse_GC(GC);
 		return (st < 0 ? (-1) : (0));

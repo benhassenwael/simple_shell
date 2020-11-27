@@ -44,7 +44,7 @@ int _unset_env(char **args, char **env, gc *GC)
 {
 	char *Name = args[1];
 
-	if (!args || !env || args[2])
+	if (!args || !env || args[2] || !args[1])
 		return (-1);
 	delete_env(env, Name, GC);
 	return (0);
@@ -127,7 +127,7 @@ int _setenv(char **args, char **env, gc *newGC)
 	char *Name = args[1];
 	char *Value = args[2];
 
-	if (Name && Value)
+	if (Name && Value && args[0])
 	{
 		checkAndSet(env, Name, Value, 1, newGC);
 	}

@@ -29,10 +29,11 @@ int should_execute(int did_succ, char prev_op)
  * @env: the environment variables
  * @GC: garbage collector
  * @buff: buffer
+ * @st: pointer to status
  *
  * Return: always 0
  */
-void exec_cmd(char *name, NewCmd_t **cmd_list, char **env, gc *GC, char *buff)
+void exec_cmd(char *name, NewCmd_t **cmd_list, char **env, gc *GC, char *buff, int *st)
 {
 	int err, did_succ = 1;
 	builtin_func_t builtin_func = NULL;
@@ -46,7 +47,7 @@ while (*cmd_list)
 	{
 		if (str_is_eq(cmd_arr->args[0], "exit"))
 		{
-			__exit(cmd_arr->args, GC, cmd_list, buff);
+			__exit(cmd_arr->args, GC, cmd_list, buff, st);
 			return;
 		}
 		builtin_func = get_builtin_func(cmd_arr);
@@ -61,14 +62,14 @@ while (*cmd_list)
 			prog_path = find_prog_path(cmd_arr->args[0], env);
 			if (prog_path != NULL)
 			{
-				did_succ = !exec_prog(prog_path, cmd_arr->args, env);
+				did_succ = !exec_prog(prog_path, cmd_arr->args, env, st);
 				if (!str_is_eq(cmd_arr->args[0], prog_path))
 					free(prog_path);
 			}
 			else
 			{
-				print_str(name);
-				print_str(": No such file or directory\n");
+				printf("not found = \n" );
+				print_cmd_error(name, cmd_arr->args[0], 2);
 				did_succ = 0;
 			}
 		}

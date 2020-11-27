@@ -48,6 +48,7 @@ char *find_newline(char *arr, unsigned int n)
  * @lineptr: can contain a pointer to allocated buffer
  * @n: size of lineptr
  * @fd: file descriptor to read from
+ * @st: pointer to status
  *
  * Return: -1 on failure and line size on success
 ssize_t _getline(char **lineptr, size_t *n, int fd)
@@ -129,7 +130,7 @@ ssize_t readline(char **lineptr, int fd)
 */
 
 
-char *_getline(gc *GC)
+char *_getline(gc *GC, int *st)
 {
 	int i, buffsize = 1024, rd;
 	char c = 0;
@@ -146,16 +147,18 @@ char *_getline(gc *GC)
 		fflush(stdin);
 		rd = read(STDIN_FILENO, &c, 1);
 		if (rd == 0)
-			__exit(NULL, GC, NULL, buff);
+			__exit(NULL, GC, NULL, buff, st);
 		buff[i] = c;
 		if (buff[0] == '\n')
 		{
 			free(buff);
 			return ("\0");
 		}
+
 		if (i >= buffsize)
 		{
-			buff = _realloc(buff, buffsize, buffsize + 1);
+			buffsize += buffsize;
+			buff = _realloc(buff, buffsize, (buffsize * 2));
 			if (buff == NULL)
 			{
 				return (NULL);
