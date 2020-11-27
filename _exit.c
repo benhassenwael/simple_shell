@@ -1,4 +1,5 @@
 #include "simple_shell.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 /**
@@ -29,9 +30,9 @@ int __exit(char **args, gc *GC, NewCmd_t **res, char *buff, int *st)
 	val = _isInteger(status);
 	if (!val)
 	{
-		print_str("./hsh: 1: exit: Illegal number: ");
-		print_str(status);
-		print_str("\n");
+		perror("./hsh: 1: exit: Illegal number: ");
+		perror(status);
+		perror("\n");
 		exit(2);
 	}
 	else

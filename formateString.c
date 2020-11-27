@@ -59,7 +59,7 @@ char *delete_comment(char **str)
 
 	if (!*str)
 		return (ptr);
-	ptr = _strparse(str, "#");
+	return (_strparse(str, "#"));
 	return (ptr);
 }
 
@@ -123,11 +123,9 @@ char *_trim(char **str, __attribute__((unused))gc * GC)
 	char trimed[500], *tmp, *oldBuff = *str;
 	int i = 0, len = 0;
 
-	/*
 	for (i = 0; (*str)[i]; i++)
 		if ((*str)[i] == '\t')
 			(*str)[i] = ' ';
-	*/
 	i = 0;
 	while (**str)
 	{

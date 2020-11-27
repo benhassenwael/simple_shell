@@ -5,15 +5,15 @@
 /**
 * print_cmd_error - print error
 * @args: char **
-* @char: name
-* @int: counter
+* @input: name
+* @counter: counter
 *
 * Return: void
 */
 
 void print_cmd_error(char *args, char *input, int counter)
 {
-	char * str = NULL;
+	char *str = NULL;
 
 	print_str(args);
 	print_str(": ");
@@ -30,14 +30,14 @@ void print_cmd_error(char *args, char *input, int counter)
 /**
  * _isalpha - check the code for Holberton School students.
  * @c: blabalbal
- *	
+ *
  * Return: Always 0.
  */
 
 
 
-int _isalpha(int c)	
-{	
+int _isalpha(int c)
+{
 
 	int result = 0;
 

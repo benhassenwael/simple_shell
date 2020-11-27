@@ -33,7 +33,8 @@ int should_execute(int did_succ, char prev_op)
  *
  * Return: always 0
  */
-void exec_cmd(char *name, NewCmd_t **cmd_list, char **env, gc *GC, char *buff, int *st)
+void exec_cmd(char *name, NewCmd_t **cmd_list,
+		char **env, gc *GC, char *buff, int *st)
 {
 	int err, did_succ = 1;
 	builtin_func_t builtin_func = NULL;
@@ -46,10 +47,7 @@ while (*cmd_list)
 	if (should_execute(did_succ, prev_op))
 	{
 		if (str_is_eq(cmd_arr->args[0], "exit"))
-		{
 			__exit(cmd_arr->args, GC, cmd_list, buff, st);
-			return;
-		}
 		builtin_func = get_builtin_func(cmd_arr);
 		if (builtin_func != NULL)
 		{
@@ -68,7 +66,6 @@ while (*cmd_list)
 			}
 			else
 			{
-				printf("not found = \n" );
 				print_cmd_error(name, cmd_arr->args[0], 2);
 				did_succ = 0;
 			}

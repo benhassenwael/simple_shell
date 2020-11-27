@@ -52,11 +52,12 @@ int main(__attribute__((unused))int argc, char *argv[], char **env)
 		if (isatty(STDIN_FILENO))
 			print_str("$ ");
 		buffer = _getline(&GC, &st);
-		if (buffer[0] == '\0')
+		if (buffer[0] == '\0' || buffer[0] == '#')
 			continue;
+		buffer = delete_comment(&buffer);
 		if (buffer)
 		{
-			buffer = _trim(&buffer, 0);
+			buffer = _trim(&buffer, &GC);
 			result = search_for_command(buffer);
 			if (result)
 				exec_cmd(argv[0], result, env, &GC, buffer, &st);
