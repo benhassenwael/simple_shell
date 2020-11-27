@@ -31,42 +31,6 @@ int init_gc(gc *GC)
 }
 
 /**
- * run_once - a branche from main in case of pipe input
- * @name: name of the program
- * @env: environment variables
- * @GC: garbage collector
- *
- * Return: -1 on failure
-int run_once(char *name, char **env, gc *GC)
-{
-	char **array, *buffer = NULL;
-	int i = 0, err;
-	NewCmd_t **result = NULL;
-
-	array = malloc(sizeof(char *) * 256);
-	array[0] = NULL;
-	fflush(stdout);
-	err = readline(array, STDIN_FILENO);
-	if (err == -1)
-		return (-1);
-	while (array[i])
-	{
-		buffer = _trim(&array[i], 0);
-		result = search_for_command(buffer);
-		if (result)
-			exec_cmd(name, result, env, GC, buffer);
-		free_array_of_struct(result);
-		i++;
-	}
-	free(array);
-	free_GC_env(GC);
-	free(GC->str_coll);
-	exit(0);
-	return (0);
-}
-*/
-
-/**
  * main - main function
  * @argv: arguments vector
  * @argc: arguments count

@@ -45,90 +45,10 @@ char *find_newline(char *arr, unsigned int n)
  * _getline - reads a line from given file descriptor and stored in *lineptr
  * the line includes the newline character and is null-terminated
  * *lineptr should be freed by the user program even if _getline() failed
- * @lineptr: can contain a pointer to allocated buffer
- * @n: size of lineptr
- * @fd: file descriptor to read from
  * @st: pointer to status
- *
+ * @GC: gc
  * Return: -1 on failure and line size on success
-ssize_t _getline(char **lineptr, size_t *n, int fd)
-{
-	char buffer[1024], *newline_ptr = NULL;
-	ssize_t nread;
-	int i, err, line_size = 0;
-
-	fflush(stdout);
-	do {
-		nread = read(fd, buffer, 1023);
-		if (nread == 0 && line_size == 0)
-			return (-1);
-		newline_ptr = find_newline(buffer, nread);
-		if (newline_ptr == NULL)
-		{
-			err = copy_buffer(buffer, lineptr, line_size, nread);
-			if (err == -1)
-				return (-1);
-			line_size += nread;
-		}
-	} while (!newline_ptr && nread == 1023);
-	buffer[nread] = '\0';
-	if (newline_ptr != NULL)
-	{
-		for (i = 0; buffer[i] != '\n'; i++)
-			;
-		nread = i + 1;
-	}
-	err = copy_buffer(buffer, lineptr, line_size, nread + 1);
-	if (err == -1)
-		return (-1);
-	*n = line_size + nread;
-	return (*n);
-}
 */
-
-/**
- * readline - read from file descriptor line by line
- * @lineptr: pointer to the first returning read string
- * @fd: file descriptor to read from
- *
- * Return: -1 on failure
-ssize_t readline(char **lineptr, int fd)
-{
-	char buffer[1024], c = 0;
-	ssize_t nread = 1;
-	int i, line_size = 0, lines = 0;
-
-	while (c != EOF && nread != 0)
-	{
-		fflush(stdin);
-		nread = read(fd, &c, 1);
-		if (nread == 0 && line_size == 0 && lines == 0)
-			return (-1);
-		if (c == '\n')
-		{
-		lineptr[lines] = malloc(sizeof(char) * (line_size + 1));
-			for (i = 0; i < line_size; i++)
-				lineptr[lines][i] = buffer[i];
-			line_size = 0;
-			lineptr[lines++][i] = '\0';
-			lineptr[lines] = NULL;
-		}
-		else if (c != EOF)
-			buffer[line_size++] = c;
-	}
-	if (c == EOF && line_size > 1)
-	{
-		lineptr[lines] = malloc(sizeof(char) * (line_size + 1));
-		for (i = 0; i < line_size; i++)
-			lineptr[lines][i] = buffer[i];
-		line_size = 0;
-		lineptr[lines++][i] = '\0';
-		lineptr[lines] = NULL;
-	}
-	return (0);
-}
-*/
-
 
 char *_getline(gc *GC, int *st)
 {

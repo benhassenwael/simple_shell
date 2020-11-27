@@ -13,8 +13,8 @@
  */
 int __exit(char **args, gc *GC, NewCmd_t **res, char *buff, int *st)
 {
-	int i, val = 0;
-	char *status, *alpha;
+	int val = 0;
+	char *status;
 
 
 	if (args == NULL || args[1] == NULL)
